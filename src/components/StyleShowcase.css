@@ -1,0 +1,114 @@
+.style-showcase-section {
+  padding: 3rem 1.25rem 4rem 1.25rem;
+  text-align: center;
+}
+
+.showcase-header {
+  max-width: 680px;
+  margin: 0 auto 2.5rem auto;
+  position: relative;
+}
+
+.showcase-nation-tag {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #000045;
+  letter-spacing: 0.8px;
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.showcase-main-title {
+  font-size: 2.3rem;
+  font-weight: 900;
+  color: #000045;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  margin-bottom: 0.75rem;
+}
+
+.showcase-subtitle {
+  font-size: 0.88rem;
+  color: #475569;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.showcase-arrows {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+.arrow-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000045;
+  transition: all 0.2s ease;
+}
+
+.arrow-circle.active, .arrow-circle:hover {
+  background: #000045;
+  color: #ffffff;
+  border-color: #000045;
+}
+
+/* Slider */
+.showcase-slider {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+.showcase-slide-card {
+  height: 420px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 69, 0.08);
+  transition: all 0.35s ease;
+}
+
+.showcase-slide-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(0, 0, 69, 0.16);
+}
+
+.showcase-slide-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.showcase-slide-card:hover .showcase-slide-img {
+  transform: scale(1.05);
+}
+
+@media (max-width: 1024px) {
+  .showcase-slider {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .showcase-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 1rem;
+    padding-bottom: 1rem;
+  }
+  .showcase-slide-card {
+    min-width: 260px;
+    height: 340px;
+    scroll-snap-align: center;
+    flex-shrink: 0;
+  }
+  .showcase-main-title { font-size: 1.75rem; }
+}

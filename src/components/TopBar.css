@@ -1,0 +1,106 @@
+.top-bar {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background: linear-gradient(90deg, #000040, #001a66);
+  z-index: 1000;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.top-bar-inner {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0 1rem;
+  overflow: hidden;
+}
+
+.ticker {
+  flex: 1;
+  overflow: hidden;
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: tickerScroll 32s linear infinite;
+}
+
+.ticker-track span {
+  white-space: nowrap;
+  color: #fff;
+  font-size: 13.5px;
+  font-weight: 500;
+  padding-right: 60px;
+}
+
+.top-bar:hover .ticker-track {
+  animation-play-state: paused;
+}
+
+.cta-btn {
+  background: #ff4081;
+  color: #fff;
+  padding: 5px 14px;
+  margin-left: 10px;
+  border-radius: 20px;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(255, 64, 129, 0.4);
+}
+
+.top-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 10px;
+}
+
+.admin-login-top-btn {
+  padding: 5px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.admin-login-top-btn:hover {
+  background: #fff;
+  color: #000045;
+}
+
+.cta-btn:hover {
+  background: #ff1f6b;
+  transform: scale(1.05);
+}
+
+@keyframes tickerScroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 768px) {
+  .ticker-track span {
+    font-size: 12px;
+    padding-right: 35px;
+  }
+  .cta-btn {
+    padding: 4px 10px;
+    font-size: 11px;
+  }
+  .admin-login-top-btn { padding: 4px 8px; font-size: 10px; }
+  .top-bar-actions { gap: 4px; margin-left: 4px; }
+}

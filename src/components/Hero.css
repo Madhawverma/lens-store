@@ -1,0 +1,187 @@
+.hero-section {
+  padding: 2rem 1.25rem 3rem 1.25rem;
+}
+
+.hero-split-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.hero-text-side {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-badge-tag {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #000045;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.75rem;
+}
+
+.hero-main-heading {
+  font-size: 3.1rem;
+  font-weight: 900;
+  color: #0f172a;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  margin-bottom: 1.2rem;
+}
+
+.hero-subtext {
+  font-size: 0.95rem;
+  color: #475569;
+  line-height: 1.6;
+  max-width: 480px;
+  margin-bottom: 2rem;
+}
+
+.hero-cta-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2.2rem;
+}
+
+.btn-navy-pill {
+  background-color: #000045;
+  color: #ffffff;
+  padding: 0.85rem 2rem;
+  border-radius: var(--radius-full);
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 69, 0.25);
+}
+
+.btn-navy-pill:hover {
+  background-color: #001a66;
+  transform: translateY(-2px);
+}
+
+.btn-cyan-pill {
+  background-color: #38bdf8;
+  color: #ffffff;
+  padding: 0.85rem 2rem;
+  border-radius: var(--radius-full);
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(56, 189, 248, 0.35);
+}
+
+.btn-cyan-pill:hover {
+  background-color: #0284c7;
+  transform: translateY(-2px);
+}
+
+.hero-trust-stars-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.stars-icons {
+  display: flex;
+  gap: 2px;
+}
+
+.rating-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #334155;
+  letter-spacing: 0.4px;
+}
+
+.hero-customers-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.84rem;
+  color: #1e293b;
+}
+
+.text-cyan-check {
+  color: #0ea5e9;
+}
+
+/* Models Dual Portrait Cards */
+.hero-models-side {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.model-portrait-card {
+  position: relative;
+  height: 380px;
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: #e2e8f0;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.35s ease;
+}
+
+.model-portrait-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 35px rgba(0, 0, 69, 0.18);
+}
+
+.model-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  animation: imageFloat 5s ease-in-out infinite;
+}
+
+.model-portrait-card:hover .model-img {
+  transform: scale(1.05);
+  animation-play-state: paused;
+}
+
+@keyframes imageFloat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.025); }
+}
+
+.model-overlay-tag {
+  position: absolute;
+  bottom: 18px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 2;
+}
+
+.model-overlay-tag span {
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 800;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  letter-spacing: -0.2px;
+}
+
+@media (max-width: 1024px) {
+  .hero-split-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .hero-main-heading { font-size: 2.4rem; }
+}
+
+@media (max-width: 640px) {
+  .hero-models-side {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .model-portrait-card {
+    height: 280px;
+  }
+  .hero-main-heading { font-size: 2rem; }
+  .hero-cta-buttons { flex-direction: column; }
+}
