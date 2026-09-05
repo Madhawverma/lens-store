@@ -274,6 +274,8 @@
 }
 
 .admin-records-table { margin-top: 1rem; overflow-x: auto; }
+.admin-view-more { display: block; margin: 1.25rem auto 0; padding: .7rem 1.2rem; border: 1px solid #cbd5e1; border-radius: 8px; background: #fff; color: #000045; font-weight: 800; cursor: pointer; }
+.admin-view-more:hover { border-color: #0284c7; color: #0284c7; }
 .admin-records-table table { min-width: 760px; }
 .record-id { color: #0369a1; font-weight: 800; font-size: .85rem; }
 .record-phone { display: block; color: #64748b; font-size: .78rem; margin-top: .2rem; }

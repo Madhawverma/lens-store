@@ -14,6 +14,7 @@ export default function AdminPanel() {
   const [editingProduct, setEditingProduct] = useState(null);
   const [activeSection, setActiveSection] = useState('products');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [visibleProductCount, setVisibleProductCount] = useState(10);
   const [language, setLanguage] = useState(() => localStorage.getItem('admin_language') || 'en');
   const [repairForm, setRepairForm] = useState({ name: '', phone: '', issue: '', amount: '' });
   const navigate = useNavigate();
@@ -75,9 +76,10 @@ export default function AdminPanel() {
     { id: 'turban-friendly', label: text.turbanFriendly },
     { id: 'day-night', label: text.dayNight }
   ];
-  const visibleProducts = selectedCategory === 'all'
+  const filteredProducts = selectedCategory === 'all'
     ? products
     : products.filter((product) => product.category === selectedCategory);
+  const visibleProducts = filteredProducts.slice(0, visibleProductCount);
   const orderRecords = orders.filter((record) => record.type === 'order');
   const repairRecords = orders.filter((record) => record.type === 'repair');
   const salesTotal = orderRecords.filter((order) => order.status !== 'cancelled').reduce((total, order) => total + Number(order.total || 0), 0);
@@ -173,7 +175,7 @@ export default function AdminPanel() {
         </div> : <>
           <div className="admin-category-groups">
             {categoryGroups.map((group) => (
-              <button key={group.id} className={selectedCategory === group.id ? 'admin-category-group active' : 'admin-category-group'} onClick={() => setSelectedCategory(group.id)}>
+              <button key={group.id} className={selectedCategory === group.id ? 'admin-category-group active' : 'admin-category-group'} onClick={() => { setSelectedCategory(group.id); setVisibleProductCount(10); }}>
                 <span>{group.label}</span>
                 <strong>{group.id === 'all' ? products.length : products.filter((product) => product.category === group.id).length}</strong>
               </button>
@@ -234,6 +236,11 @@ export default function AdminPanel() {
             </tbody>
           </table>
         </div>
+        {visibleProductCount < filteredProducts.length && (
+          <button className="admin-view-more" onClick={() => setVisibleProductCount((count) => Math.min(count + 10, filteredProducts.length))}>
+            View More ({Math.min(10, filteredProducts.length - visibleProductCount)} more)
+          </button>
+        )}
         </>}
       </main>
 
