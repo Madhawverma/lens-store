@@ -28,10 +28,20 @@ A modern eyewear e-commerce storefront built with React and Vite. Lens Store let
 
 Lens Store uses a bright, modern optical-store palette designed to feel trustworthy and energetic:
 
+### Color Palette
+
+![Deep Navy](https://img.shields.io/badge/Deep_Navy-%23000045-000045?style=for-the-badge&labelColor=111827)
+![Yellow](https://img.shields.io/badge/Yellow-%23e5a93b-e5a93b?style=for-the-badge&labelColor=111827)
+![Purple](https://img.shields.io/badge/Purple-%238b5cf6-8b5cf6?style=for-the-badge&labelColor=111827)
+![Blue](https://img.shields.io/badge/Blue-%230088ff-0088ff?style=for-the-badge&labelColor=111827)
+![Pink](https://img.shields.io/badge/Pink-%23ff4081-ff4081?style=for-the-badge&labelColor=111827)
+![Green](https://img.shields.io/badge/Green-%2300b87c-00b87c?style=for-the-badge&labelColor=111827)
+
 - **Deep navy** (`#000045`) for the main brand, navigation, headings, and primary actions
-- **Pink** (`#ff4081`) for offers, highlights, active states, and calls to action
-- **Gold** (`#e5a93b`) for premium accents and promotional badges
+- **Yellow / gold** (`#e5a93b`) for premium accents and promotional badges
+- **Purple** (`#8b5cf6`) for creative style highlights and discovery sections
 - **Blue** (`#0088ff`) for information and support states
+- **Pink** (`#ff4081`) for offers, highlights, active states, and calls to action
 - **Green** (`#00b87c`) for success, delivery, and confirmation states
 - **Light gray** (`#f8f9fa`) for the page background and comfortable product browsing
 
