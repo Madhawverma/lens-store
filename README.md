@@ -24,6 +24,19 @@ A modern eyewear e-commerce storefront built with React and Vite. Lens Store let
 - Lucide React icons
 - Oxlint
 
+## Visual Design
+
+Lens Store uses a bright, modern optical-store palette designed to feel trustworthy and energetic:
+
+- **Deep navy** (`#000045`) for the main brand, navigation, headings, and primary actions
+- **Pink** (`#ff4081`) for offers, highlights, active states, and calls to action
+- **Gold** (`#e5a93b`) for premium accents and promotional badges
+- **Blue** (`#0088ff`) for information and support states
+- **Green** (`#00b87c`) for success, delivery, and confirmation states
+- **Light gray** (`#f8f9fa`) for the page background and comfortable product browsing
+
+The interface is responsive, uses rounded controls and product cards, and includes clear contrast for comfortable shopping on desktop and mobile.
+
 ## Getting Started
 
 ### Prerequisites
@@ -128,3 +141,7 @@ Deploy the generated `dist/` directory to a static hosting provider such as Fire
 ## License
 
 This project does not currently include a license. Add one before distributing the code publicly.
+
+## Developer
+
+Developed by **Madhaw Verma**.
