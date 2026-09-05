@@ -11,7 +11,9 @@ export const CartDrawer = ({
   cartItems, 
   onUpdateQuantity, 
   onRemoveItem,
-  onClearCart
+  onClearCart,
+  isCustomerLoggedIn,
+  onRequireLogin
 }) => {
   const [couponCode, setCouponCode] = useState('');
   const [discountApplied, setDiscountApplied] = useState(false);
@@ -43,6 +45,10 @@ export const CartDrawer = ({
   };
 
   const handleCheckout = () => {
+    if (!isCustomerLoggedIn) {
+      onRequireLogin();
+      return;
+    }
     const order = createOrder({ items: cartItems, total: finalTotal + (subtotal >= freeShippingThreshold ? 0 : 99), customer });
     setPlacedOrder(order);
     confetti({

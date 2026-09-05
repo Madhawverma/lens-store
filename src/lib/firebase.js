@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
+import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, signInWithPopup, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import { sendPasswordResetEmail } from 'firebase/auth';
@@ -43,6 +43,11 @@ export async function resetAdminPassword(loginId) {
 export async function signInCustomer(email, password) {
   if (!firebaseEnabled || !auth) throw new Error('Firebase is not configured.');
   return signInWithEmailAndPassword(auth, email, password);
+}
+
+export async function signInCustomerWithGoogle() {
+  if (!firebaseEnabled || !auth) throw new Error('Firebase is not configured.');
+  return signInWithPopup(auth, new GoogleAuthProvider());
 }
 
 export async function registerCustomer(name, email, password) {

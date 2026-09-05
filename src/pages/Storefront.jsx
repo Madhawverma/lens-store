@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { TopBar } from '../components/TopBar';
 import { Header } from '../components/Header';
 import { CategoryPills } from '../components/CategoryPills';
@@ -23,6 +23,8 @@ import { useProducts } from '../context/ProductContext';
 import { Filter, SlidersHorizontal, Sparkles, MessageCircle, Check, ArrowDown, ArrowUp } from 'lucide-react';
 import '../App.css';
 import { useNavigate } from 'react-router-dom';
+import { auth } from '../lib/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 
 export function Storefront() {
   const navigate = useNavigate();
@@ -41,6 +43,7 @@ export function Storefront() {
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [customerUser, setCustomerUser] = useState(null);
   
   // Active selected item for Modals
   const [selectedLensProduct, setSelectedLensProduct] = useState(null);
@@ -49,6 +52,11 @@ export function Storefront() {
   // Cart & Wishlist state
   const [cartItems, setCartItems] = useState([]);
   const [wishlistItems, setWishlistItems] = useState([]);
+
+  useEffect(() => {
+    if (!auth) return undefined;
+    return onAuthStateChanged(auth, setCustomerUser);
+  }, []);
 
   // Category & Filter Handler
   const handleSelectCategory = (catId, subItem = null) => {
@@ -352,6 +360,8 @@ export function Storefront() {
         onUpdateQuantity={handleUpdateQuantity}
         onRemoveItem={handleRemoveFromCart}
         onClearCart={() => setCartItems([])}
+        isCustomerLoggedIn={Boolean(customerUser)}
+        onRequireLogin={() => setIsAuthOpen(true)}
       />
 
       <WishlistDrawer 

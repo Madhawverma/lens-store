@@ -9,7 +9,7 @@ const REPAIR_STEPS = ['received', 'diagnosing', 'repairing', 'ready', 'delivered
 
 export default function OrderTracking() {
   const { orderId: routeOrderId } = useParams();
-  const { orders } = useOrders();
+  const { orders, cancelOrder } = useOrders();
   const [searchId, setSearchId] = useState(routeOrderId || '');
   const record = orders.find((order) => order.id.toLowerCase() === searchId.trim().toLowerCase());
   const steps = record?.type === 'repair' ? REPAIR_STEPS : ORDER_STEPS;
@@ -37,6 +37,11 @@ export default function OrderTracking() {
               {steps.map((step, index) => <div className={`tracking-step ${index <= currentStep ? 'complete' : ''}`} key={step}><span>{index <= currentStep ? <CheckCircle2 size={18} /> : <Clock3 size={18} />}</span><strong>{step}</strong></div>)}
             </div>
             <div className="tracking-meta"><span>Customer: <strong>{record.customer?.name}</strong></span><span>Last updated: <strong>{new Date(record.updatedAt).toLocaleString()}</strong></span></div>
+            {record.type === 'order' && ['placed', 'confirmed'].includes(record.status) && (
+              <button className="tracking-cancel-btn" onClick={() => { if (window.confirm('Cancel this order?')) cancelOrder(record.id); }}>
+                Cancel Order
+              </button>
+            )}
             <div className="tracking-history"><h2>Updates</h2>{[...(record.timeline || [])].reverse().map((event, index) => <div className="history-row" key={`${event.at}-${index}`}><span className="history-dot" /><div><strong>{event.note}</strong><small>{new Date(event.at).toLocaleString()}</small></div></div>)}</div>
           </div>
         )}

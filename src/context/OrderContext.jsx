@@ -94,8 +94,10 @@ export function OrderProvider({ children }) {
     }));
   };
 
+  const cancelOrder = (id) => updateOrderStatus(id, 'cancelled');
+
   return (
-    <OrderContext.Provider value={{ orders, createOrder, createRepair, updateOrderStatus }}>
+    <OrderContext.Provider value={{ orders, createOrder, createRepair, updateOrderStatus, cancelOrder }}>
       {children}
     </OrderContext.Provider>
   );

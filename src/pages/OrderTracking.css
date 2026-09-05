@@ -6,6 +6,7 @@
 .tracking-heading p { color: #64748b; }
 .tracking-search { display: flex; gap: .65rem; margin: 1.75rem 0; }
 .tracking-search input, .checkout-customer-fields input, .repair-form input { min-width: 0; border: 1px solid #cbd5e1; border-radius: 7px; padding: .75rem .85rem; color: #0f172a; background: #fff; }
+.tracking-cancel-btn { margin: 1rem 0; padding: .65rem 1rem; border: 1px solid #fecaca; border-radius: 7px; background: #fef2f2; color: #b91c1c; font-weight: 700; cursor: pointer; }
 .tracking-search input { flex: 1; text-transform: uppercase; }
 .tracking-search button, .track-order-link { display: inline-flex; align-items: center; justify-content: center; gap: .4rem; background: #0284c7; color: #fff; border-radius: 7px; padding: .7rem 1rem; font-weight: 800; }
 .tracking-empty { display: grid; place-items: center; gap: .45rem; padding: 3rem 1rem; color: #64748b; text-align: center; }
