@@ -19,6 +19,7 @@ import { StyleFinder } from '../components/StyleFinder';
 import { ShopByNeed } from '../components/ShopByNeed';
 import { ShapeGrid } from '../components/ShapeGrid';
 import { ProductGridSection } from '../components/ProductGridSection';
+import { RepairModal } from '../components/RepairModal';
 import { useProducts } from '../context/ProductContext';
 import { Filter, SlidersHorizontal, Sparkles, MessageCircle, Check, ArrowDown, ArrowUp } from 'lucide-react';
 import '../App.css';
@@ -43,6 +44,7 @@ export function Storefront() {
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [isRepairOpen, setIsRepairOpen] = useState(false);
   const [customerUser, setCustomerUser] = useState(null);
   
   // Active selected item for Modals
@@ -317,6 +319,15 @@ export function Storefront() {
       
       <ProductGridSection title="Computer Glasses" subtitle="LIMITED COLLECTION" categoryFilter="computer-glasses" maxItems={25} onAddToCart={handleAddToCart} onToggleWishlist={handleToggleWishlist} wishlistItems={wishlistItems} onQuickView={setQuickViewProduct} onSelectLens={setSelectedLensProduct} />
 
+      <section className="repair-cta-section container">
+        <div>
+          <span className="repair-cta-kicker">NEED OPTICAL HELP?</span>
+          <h2>Repair your favourite frames</h2>
+          <p>Send us the issue and our optical team will arrange the next step.</p>
+        </div>
+        <button className="btn-pink" onClick={() => setIsRepairOpen(true)}>Book a Repair</button>
+      </section>
+
       {/* 8. Full Footer */}
       <Footer onSelectCategory={handleSelectCategory} />
 
@@ -386,6 +397,8 @@ export function Storefront() {
         isOpen={isAuthOpen}
         onClose={() => setIsAuthOpen(false)}
       />
+
+      <RepairModal isOpen={isRepairOpen} onClose={() => setIsRepairOpen(false)} />
     </div>
   );
 }

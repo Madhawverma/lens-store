@@ -1,0 +1,101 @@
+.repair-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1800;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(15, 23, 42, 0.58);
+  backdrop-filter: blur(5px);
+}
+
+.repair-modal-card {
+  width: min(100%, 520px);
+  max-height: min(90vh, 700px);
+  overflow: auto;
+  padding: 1.5rem;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.25);
+}
+
+.repair-modal-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.repair-kicker {
+  color: var(--accent-pink);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.repair-modal-header h2 {
+  margin: 0.2rem 0;
+  color: var(--primary);
+  font-size: 1.45rem;
+}
+
+.repair-modal-header p {
+  color: var(--text-muted);
+  font-size: 0.84rem;
+}
+
+.repair-close-btn {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: var(--primary);
+}
+
+.storefront-repair-form {
+  display: grid;
+  gap: 0.85rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.storefront-repair-form label {
+  display: grid;
+  gap: 0.35rem;
+  color: #334155;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.storefront-repair-form input,
+.storefront-repair-form textarea {
+  width: 100%;
+  resize: vertical;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.75rem 0.85rem;
+  color: var(--text-main);
+  background: #fff;
+  outline: none;
+}
+
+.storefront-repair-form textarea { min-height: 90px; }
+.storefront-repair-form input:focus,
+.storefront-repair-form textarea:focus { border-color: var(--accent-pink); }
+
+.repair-success {
+  display: grid;
+  justify-items: center;
+  gap: 0.7rem;
+  padding: 2rem 1rem;
+  text-align: center;
+  color: var(--accent-green);
+}
+
+.repair-success h3 { color: var(--primary); margin: 0; }
+.repair-success p { color: var(--text-muted); margin: 0; }
+.repair-success strong { color: var(--primary); }

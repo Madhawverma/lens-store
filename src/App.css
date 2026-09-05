@@ -216,6 +216,32 @@
 
 .mt-3 { margin-top: 1rem; }
 
+.repair-cta-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  padding: 1.75rem 2rem;
+  border: 1px solid #dbe5ee;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #fff5f8, #eef6ff);
+}
+
+.repair-cta-kicker {
+  color: var(--accent-pink);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.repair-cta-section h2 { margin: 0.2rem 0; color: var(--primary); }
+.repair-cta-section p { color: var(--text-muted); font-size: 0.86rem; }
+
+@media (max-width: 640px) {
+  .repair-cta-section { align-items: flex-start; flex-direction: column; padding: 1.35rem; }
+}
+
 /* WhatsApp Floating Button */
 .whatsapp-float-btn {
   position: fixed;
