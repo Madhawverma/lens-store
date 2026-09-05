@@ -88,8 +88,10 @@
 .strip-img {
   width: 65px;
   height: 65px;
-  object-fit: cover;
+  flex: 0 0 65px;
+  object-fit: contain;
   border-radius: 8px;
+  background: #ffffff;
 }
 
 .strip-info h4 {

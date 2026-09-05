@@ -74,7 +74,8 @@
 .qv-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  padding: 1rem;
 }
 
 .qv-badge-discount {
@@ -97,7 +98,8 @@
 .qv-thumb {
   width: 60px;
   height: 60px;
-  object-fit: cover;
+  object-fit: contain;
+  padding: 0.25rem;
   border-radius: 8px;
   border: 2px solid transparent;
   cursor: pointer;
