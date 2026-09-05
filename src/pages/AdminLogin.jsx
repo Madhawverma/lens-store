@@ -24,12 +24,12 @@ export default function AdminLogin() {
         navigate('/admin');
         return;
       }
-      setError('Login ID ya password galat hai.');
+      setError('You entered the wrong password or email. Please log in again.');
     } catch (loginError) {
       const messages = {
-        'auth/invalid-credential': 'Email/Login ID ya password galat hai.',
+        'auth/invalid-credential': 'You entered the wrong password or email. Please log in again.',
         'auth/user-not-found': 'Firebase Authentication Users में admin user नहीं मिला.',
-        'auth/wrong-password': 'Admin password galat hai.',
+        'auth/wrong-password': 'You entered the wrong password or email. Please log in again.',
         'auth/invalid-email': 'Valid Firebase email या 8770152422 डालें.',
         'auth/operation-not-allowed': 'Firebase में Email/Password sign-in enable करें.'
       };
@@ -67,7 +67,7 @@ export default function AdminLogin() {
           <span>Shree Ganesh Optical Shop</span>
         </div>
         <h1>Admin Login</h1>
-        <p>Store manage karne ke liye login karein.</p>
+        <p>Please log in to manage your store.</p>
         <form onSubmit={handleSubmit} className="admin-login-form">
           <label htmlFor="admin-login-id">Admin Email</label>
           <div className="admin-login-input">
