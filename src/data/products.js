@@ -540,6 +540,7 @@ export const LENS_OPTIONS = [
     title: "Single Vision (Distance / Reading)",
     subtitle: "For single prescription correction",
     price: 499,
+    variants: [150, 200, 300, 400, 499],
     badge: "Essential",
     features: ["Custom SP/CYL Power", "Scratch Resistant", "Ultra-thin 1.56 Index"]
   },
@@ -548,6 +549,7 @@ export const LENS_OPTIONS = [
     title: "Blue Block + Anti-Glare Premium",
     subtitle: "High power with maximum digital strain prevention",
     price: 899,
+    variants: [300, 400, 500, 700, 899],
     badge: "Recommended",
     features: ["Blue Cut Nano-Tech", "Hydrophobic Dust Repellent", "Super Tough 1.61 Index"]
   },
@@ -556,6 +558,7 @@ export const LENS_OPTIONS = [
     title: "Day-Night Photochromic (Transition)",
     subtitle: "Clear indoors & darkens into sunglasses outdoors",
     price: 1299,
+    variants: [599, 699, 799, 899, 999, 1099, 1199, 1299],
     badge: "2-in-1",
     features: ["Automatic UV Reactivity", "Fast Dark-to-Clear Cycle", "All-Weather Vision"]
   }

@@ -180,6 +180,44 @@
   color: #10b981;
 }
 
+.lens-variants {
+  width: 100%;
+  margin-top: 0.8rem;
+  padding-top: 0.7rem;
+  border-top: 1px dashed #cbd5e1;
+}
+
+.lens-variants-label {
+  display: block;
+  margin-bottom: 0.45rem;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.lens-variants-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.lens-variant {
+  padding: 0.35rem 0.55rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #ffffff;
+  color: var(--primary);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.lens-variant:hover,
+.lens-variant.active {
+  border-color: var(--accent-pink);
+  background: var(--accent-pink);
+  color: #ffffff;
+}
+
 .lens-subtitle {
   font-size: 0.74rem;
   color: var(--text-muted);

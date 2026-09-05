@@ -5,6 +5,7 @@ import './LensModal.css';
 
 export const LensModal = ({ product, isOpen, onClose, onAddWithLens }) => {
   const [selectedLens, setSelectedLens] = useState(LENS_OPTIONS[0]);
+  const [selectedVariantPrice, setSelectedVariantPrice] = useState(null);
   const [prescriptionType, setPrescriptionType] = useState('single');
   const [powerNote, setPowerNote] = useState('');
 
@@ -19,7 +20,14 @@ export const LensModal = ({ product, isOpen, onClose, onAddWithLens }) => {
     features: ['Custom prescription', 'Made for your frame', 'Store-fitted lenses']
   } : null;
   const lensOptions = customLens ? [...LENS_OPTIONS, customLens] : LENS_OPTIONS;
-  const activeLens = lensOptions.some((lens) => lens.id === selectedLens.id) ? selectedLens : lensOptions[0];
+  const activeOption = lensOptions.some((lens) => lens.id === selectedLens.id) ? selectedLens : lensOptions[0];
+  const activePrice = selectedVariantPrice ?? activeOption.price;
+  const activeLens = activePrice === activeOption.price ? activeOption : {
+    ...activeOption,
+    id: `${activeOption.id}-${activePrice}`,
+    title: `${activeOption.title} - ₹${activePrice}`,
+    price: activePrice
+  };
   const totalPrice = product.price + activeLens.price;
 
   const handleConfirm = () => {
@@ -56,8 +64,11 @@ export const LensModal = ({ product, isOpen, onClose, onAddWithLens }) => {
             {lensOptions.map((lens) => (
               <div 
                 key={lens.id} 
-                className={`lens-option-card ${activeLens.id === lens.id ? 'active' : ''}`}
-                onClick={() => setSelectedLens(lens)}
+                className={`lens-option-card ${activeOption.id === lens.id ? 'active' : ''}`}
+                onClick={() => {
+                  setSelectedLens(lens);
+                  setSelectedVariantPrice(null);
+                }}
               >
                 <div className="lens-card-top">
                   <div>
@@ -65,7 +76,7 @@ export const LensModal = ({ product, isOpen, onClose, onAddWithLens }) => {
                     <h4 className="lens-title">{lens.title}</h4>
                   </div>
                   <div className="lens-price-tag">
-                    {lens.id === 'zero-power' ? '₹1' : 'Customize'}
+                    {lens.id === 'zero-power' ? '₹1' : lens.id.startsWith('custom-') ? 'Customize' : `₹${lens.price}`}
                   </div>
                 </div>
 
@@ -80,8 +91,26 @@ export const LensModal = ({ product, isOpen, onClose, onAddWithLens }) => {
                 </ul>
 
                 <div className="radio-indicator">
-                  <div className={`radio-dot ${activeLens.id === lens.id ? 'selected' : ''}`}></div>
+                  <div className={`radio-dot ${activeOption.id === lens.id ? 'selected' : ''}`}></div>
                 </div>
+
+                {activeOption.id === lens.id && lens.variants && (
+                  <div className="lens-variants" onClick={(event) => event.stopPropagation()}>
+                    <span className="lens-variants-label">Choose your price</span>
+                    <div className="lens-variants-list">
+                      {lens.variants.map((variant) => (
+                        <button
+                          type="button"
+                          key={variant}
+                          className={activePrice === variant ? 'lens-variant active' : 'lens-variant'}
+                          onClick={() => setSelectedVariantPrice(variant)}
+                        >
+                          ₹{variant}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
