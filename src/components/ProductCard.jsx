@@ -88,17 +88,23 @@ export const ProductCard = ({
           </div>
         </div>
 
+        <div className={`stock-status ${product.stock > 0 ? 'in-stock' : 'out-of-stock'}`}>
+          {product.stock > 0 ? `${product.stock} in stock` : 'Out of Stock'}
+        </div>
+
         <div className="card-actions-row">
           <button 
             className="btn-select-lens"
             onClick={() => onSelectLens(product)}
+            disabled={product.stock <= 0}
           >
-            <Sparkles size={14} /> Add Lenses
+            <Sparkles size={14} /> {product.stock > 0 ? 'Add Lenses' : 'Out of Stock'}
           </button>
           
           <button 
             className="btn-quick-cart"
             onClick={() => onAddToCart(product)}
+            disabled={product.stock <= 0}
             title="Add frame directly to cart"
           >
             <ShoppingCart size={16} />

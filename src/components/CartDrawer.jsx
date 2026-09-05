@@ -12,6 +12,7 @@ export const CartDrawer = ({
   onUpdateQuantity, 
   onRemoveItem,
   onClearCart,
+  onOrderPlaced,
   isCustomerLoggedIn,
   onRequireLogin
 }) => {
@@ -19,6 +20,7 @@ export const CartDrawer = ({
   const [discountApplied, setDiscountApplied] = useState(false);
   const [checkoutSuccess, setCheckoutSuccess] = useState(false);
   const [placedOrder, setPlacedOrder] = useState(null);
+  const [checkoutError, setCheckoutError] = useState('');
   const [customer, setCustomer] = useState({ name: '', phone: '', address: '', paymentMethod: 'Cash on Delivery', deliveryDate: '', eyeTestRequested: false });
   const { createOrder } = useOrders();
 
@@ -49,7 +51,14 @@ export const CartDrawer = ({
       onRequireLogin();
       return;
     }
+    const unavailableItem = cartItems.find((item) => item.quantity > Number(item.stock ?? 0));
+    if (unavailableItem) {
+      setCheckoutError(`${unavailableItem.name} has only ${unavailableItem.stock || 0} left in stock.`);
+      return;
+    }
+    setCheckoutError('');
     const order = createOrder({ items: cartItems, total: finalTotal + (subtotal >= freeShippingThreshold ? 0 : 99), customer });
+    onOrderPlaced(cartItems);
     setPlacedOrder(order);
     confetti({
       particleCount: 150,
@@ -210,6 +219,8 @@ export const CartDrawer = ({
                 <span className="text-green">- ₹{discountAmount}</span>
               </div>
             )}
+
+            {checkoutError && <p className="checkout-error">{checkoutError}</p>}
 
             <div className="cart-summary-breakdown">
               <div className="summary-line">

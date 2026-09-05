@@ -196,6 +196,15 @@
   margin-top: auto;
 }
 
+.stock-status {
+  margin: -0.45rem 0 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.stock-status.in-stock { color: #16a34a; }
+.stock-status.out-of-stock { color: #dc2626; }
+
 .price-group {
   display: flex;
   align-items: baseline;
@@ -254,4 +263,11 @@
 .btn-quick-cart:hover {
   background-color: var(--primary);
   color: #ffffff;
+}
+
+.btn-select-lens:disabled,
+.btn-quick-cart:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  transform: none;
 }

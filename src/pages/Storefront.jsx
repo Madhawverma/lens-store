@@ -28,7 +28,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 
 export function Storefront() {
   const navigate = useNavigate();
-  const { products: allProducts } = useProducts();
+  const { products: allProducts, decreaseStock } = useProducts();
 
   // State variables
   const [activeCategory, setActiveCategory] = useState('all');
@@ -76,6 +76,7 @@ export function Storefront() {
 
   // Add Frame Directly to Cart
   const handleAddToCart = (product) => {
+    if (product.stock <= 0) return;
     const salePrice = product.discount ? Math.round(product.price * (1 - product.discount / 100)) : product.price;
     setCartItems((prev) => {
       const existing = prev.find((item) => item.id === product.id && !item.lens);
@@ -93,6 +94,7 @@ export function Storefront() {
 
   // Add Product with Customized Lens to Cart
   const handleAddWithLens = (product, lens, note) => {
+    if (product.stock <= 0) return;
     const salePrice = product.discount ? Math.round(product.price * (1 - product.discount / 100)) : product.price;
     setCartItems((prev) => {
       const existingIndex = prev.findIndex((item) => item.id === product.id && item.lens?.id === lens.id);
@@ -360,6 +362,7 @@ export function Storefront() {
         onUpdateQuantity={handleUpdateQuantity}
         onRemoveItem={handleRemoveFromCart}
         onClearCart={() => setCartItems([])}
+        onOrderPlaced={decreaseStock}
         isCustomerLoggedIn={Boolean(customerUser)}
         onRequireLogin={() => setIsAuthOpen(true)}
       />

@@ -372,6 +372,13 @@
   opacity: 0.55;
 }
 
+.checkout-error {
+  margin: 0 0 0.75rem;
+  color: #dc2626;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
 .secure-badge-footer {
   display: flex;
   align-items: center;

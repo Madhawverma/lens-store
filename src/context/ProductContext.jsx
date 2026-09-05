@@ -8,7 +8,7 @@ const ProductContext = createContext();
 export const useProducts = () => useContext(ProductContext);
 
 export const ProductProvider = ({ children }) => {
-  const [products, setProducts] = useState(PRODUCTS_DATA);
+  const [products, setProducts] = useState(() => PRODUCTS_DATA.map((product) => ({ ...product, stock: product.stock ?? 10 })));
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -18,17 +18,17 @@ export const ProductProvider = ({ children }) => {
       try {
         const parsed = JSON.parse(stored);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          setProducts(parsed);
+          setProducts(parsed.map((product) => ({ ...product, stock: product.stock ?? 10 })));
         } else {
-          setProducts(PRODUCTS_DATA);
+          setProducts(PRODUCTS_DATA.map((product) => ({ ...product, stock: product.stock ?? 10 })));
           localStorage.setItem('verma_ji_store_products_v4', JSON.stringify(PRODUCTS_DATA));
         }
       } catch (e) {
-        setProducts(PRODUCTS_DATA);
+        setProducts(PRODUCTS_DATA.map((product) => ({ ...product, stock: product.stock ?? 10 })));
       }
     } else {
       // If nothing in localStorage, use master data from products.js
-      setProducts(PRODUCTS_DATA);
+      setProducts(PRODUCTS_DATA.map((product) => ({ ...product, stock: product.stock ?? 10 })));
       localStorage.setItem('verma_ji_store_products_v4', JSON.stringify(PRODUCTS_DATA));
     }
     setIsLoaded(true);
@@ -40,7 +40,7 @@ export const ProductProvider = ({ children }) => {
       try {
         const snapshot = await getDocs(collection(db, 'products'));
         if (!snapshot.empty) {
-          setProducts(snapshot.docs.map((product) => product.data()));
+          setProducts(snapshot.docs.map((product) => ({ ...product.data(), stock: product.data().stock ?? 10 })));
           return;
         }
         for (let start = 0; start < PRODUCTS_DATA.length; start += 500) {
@@ -73,6 +73,7 @@ export const ProductProvider = ({ children }) => {
       hoverImage: newProduct.hoverImage || newProduct.images?.[1] || newProduct.image,
       originalPrice: newProduct.originalPrice || newProduct.price,
       customLensPrice: Number(newProduct.customLensPrice || 0),
+      stock: Math.max(0, Number(newProduct.stock || 0)),
       isNew: true, // mark as new arrival
       rating: 5,
       reviews: 0
@@ -96,6 +97,7 @@ export const ProductProvider = ({ children }) => {
       originalPrice: Number(changes.originalPrice || changes.price),
       discount: changes.discount ? Number(changes.discount) : null,
       customLensPrice: Number(changes.customLensPrice || 0)
+      ,stock: Math.max(0, Number(changes.stock ?? updatedProduct.stock ?? 0))
     } : null;
     setProducts(prev => prev.map(product => product.id === id ? {
       ...product,
@@ -106,6 +108,7 @@ export const ProductProvider = ({ children }) => {
       originalPrice: Number(changes.originalPrice || changes.price),
       discount: changes.discount ? Number(changes.discount) : null,
       customLensPrice: Number(changes.customLensPrice || 0)
+      ,stock: Math.max(0, Number(changes.stock ?? product.stock ?? 0))
     } : product));
     if (firebaseEnabled && db && nextProduct) setDoc(doc(db, 'products', String(id)), nextProduct);
   };
@@ -115,8 +118,25 @@ export const ProductProvider = ({ children }) => {
     if (firebaseEnabled && db) deleteDoc(doc(db, 'products', String(id)));
   };
 
+  const decreaseStock = (items) => {
+    setProducts((current) => {
+      const nextProducts = current.map((product) => {
+        const quantity = items.filter((item) => item.id === product.id).reduce((sum, item) => sum + item.quantity, 0);
+        if (!quantity) return product;
+        return { ...product, stock: Math.max(0, Number(product.stock ?? 0) - quantity) };
+      });
+      if (firebaseEnabled && db) {
+        nextProducts.forEach((product) => {
+          const previous = current.find((item) => item.id === product.id);
+          if (previous?.stock !== product.stock) setDoc(doc(db, 'products', String(product.id)), product);
+        });
+      }
+      return nextProducts;
+    });
+  };
+
   return (
-    <ProductContext.Provider value={{ products, addProduct, updateProduct, deleteProduct }}>
+    <ProductContext.Provider value={{ products, addProduct, updateProduct, deleteProduct, decreaseStock }}>
       {children}
     </ProductContext.Provider>
   );

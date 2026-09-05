@@ -247,6 +247,9 @@
   font-size: 0.85rem;
 }
 
+.table-stock-in { color: #16a34a; font-weight: 800; }
+.table-stock-out { color: #dc2626; font-weight: 800; }
+
 .customer-card {
   display: flex;
   align-items: center;

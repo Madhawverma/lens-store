@@ -181,13 +181,14 @@ export default function AdminPanel() {
           </div>
           <div className="table-container">
           <table className="products-table">
-            <thead>
+              <thead>
               <tr>
                 <th>{text.image}</th>
                 <th>{text.name}</th>
                 <th>{text.category}</th>
                 <th>{text.price}</th>
                 <th>{text.discount}</th>
+                <th>Stock</th>
                 <th>{text.actions}</th>
               </tr>
             </thead>
@@ -206,6 +207,9 @@ export default function AdminPanel() {
                   <td className="table-price">₹{product.price}</td>
                   <td className="table-discount">
                     {product.discount ? `${product.discount}% OFF` : '-'}
+                  </td>
+                  <td className={product.stock > 0 ? 'table-stock-in' : 'table-stock-out'}>
+                    {product.stock > 0 ? product.stock : 'Out of Stock'}
                   </td>
                   <td>
                     <div className="table-actions">

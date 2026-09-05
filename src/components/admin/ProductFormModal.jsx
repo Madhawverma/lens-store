@@ -10,11 +10,11 @@ export const ProductFormModal = ({ onClose, product = null, onUpdate, language =
   const text = isHindi ? {
     edit: 'प्रोडक्ट कीमत एडिट करें', add: 'नया प्रोडक्ट जोड़ें', name: 'प्रोडक्ट नाम',
     price: 'कीमत (₹)', discount: 'डिस्काउंट (%)', category: 'कैटेगरी', shape: 'फ्रेम शेप',
-    image: 'प्रोडक्ट इमेज', cancel: 'कैंसल', update: 'प्रोडक्ट अपडेट करें', save: 'प्रोडक्ट सेव करें',
+    image: 'प्रोडक्ट इमेज', stock: 'स्टॉक मात्रा', cancel: 'कैंसल', update: 'प्रोडक्ट अपडेट करें', save: 'प्रोडक्ट सेव करें',
     choose: 'अपने डिवाइस से इमेज चुनें। अधिकतम साइज़: 5 MB।'
   } : {
     edit: 'Edit Product Price', add: 'Add New Product', name: 'Product Name', price: 'Price (₹)',
-    discount: 'Discount (%)', category: 'Category', shape: 'Frame Shape', image: 'Product Image', customLensPrice: 'Custom Lens Price (₹)',
+    discount: 'Discount (%)', category: 'Category', shape: 'Frame Shape', image: 'Product Image', stock: 'Stock Quantity', customLensPrice: 'Custom Lens Price (₹)',
     cancel: 'Cancel', update: 'Update Product', save: 'Save Product',
     choose: 'Select an image directly from your device. Maximum size: 5 MB.'
   };
@@ -27,6 +27,7 @@ export const ProductFormModal = ({ onClose, product = null, onUpdate, language =
     type: product?.type || 'Eyeglasses',
     shape: product?.shape || 'Rectangle',
     customLensPrice: product?.customLensPrice || '',
+    stock: product?.stock ?? 0,
     image: product?.image || product?.images?.[0] || ''
   });
   const [imageError, setImageError] = useState('');
@@ -62,6 +63,7 @@ export const ProductFormModal = ({ onClose, product = null, onUpdate, language =
         price: Number(formData.price),
         discount: formData.discount ? Number(formData.discount) : null,
         customLensPrice: formData.customLensPrice ? Number(formData.customLensPrice) : 0,
+        stock: Math.max(0, Number(formData.stock)),
         category: formData.category,
         type: formData.type,
         shape: formData.shape,
@@ -188,6 +190,12 @@ export const ProductFormModal = ({ onClose, product = null, onUpdate, language =
               placeholder="e.g. 799 (Optional)"
             />
             <small>Customers will see this price under Customize Lens.</small>
+          </div>
+
+          <div className="form-group">
+            <label>{text.stock || 'Stock Quantity'}</label>
+            <input type="number" name="stock" min="0" step="1" value={formData.stock} onChange={handleChange} required />
+            <small>Customers see the available quantity. At zero, the product becomes Out of Stock.</small>
           </div>
 
           <div className="form-group">
