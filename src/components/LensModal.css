@@ -203,19 +203,19 @@
 
 .lens-variant {
   padding: 0.35rem 0.55rem;
-  border: 1px solid #cbd5e1;
+  border: 1px solid #86efac;
   border-radius: 6px;
-  background: #ffffff;
-  color: var(--primary);
+  background: #f0fdf4;
+  color: #16a34a;
   font-size: 0.72rem;
   font-weight: 800;
 }
 
 .lens-variant:hover,
 .lens-variant.active {
-  border-color: var(--accent-pink);
-  background: var(--accent-pink);
-  color: #ffffff;
+  border-color: #16a34a;
+  background: #dcfce7;
+  color: #15803d;
 }
 
 .lens-subtitle {

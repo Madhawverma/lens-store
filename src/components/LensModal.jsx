@@ -76,7 +76,7 @@ export const LensModal = ({ product, isOpen, onClose, onAddWithLens }) => {
                     <h4 className="lens-title">{lens.title}</h4>
                   </div>
                   <div className="lens-price-tag">
-                    {lens.id === 'zero-power' ? '₹1' : lens.id.startsWith('custom-') ? 'Customize' : `₹${lens.price}`}
+                    {lens.id === 'zero-power' ? '₹1' : lens.id.startsWith('custom-') ? 'Customize' : 'Choose'}
                   </div>
                 </div>
 
