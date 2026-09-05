@@ -20,7 +20,7 @@ export default function OrderTracking() {
       <Link to="/" className="tracking-back"><ArrowLeft size={17} /> Back to store</Link>
       <section className="tracking-shell">
         <div className="tracking-heading">
-          <span className="tracking-kicker">VERMA JI KI DUKAN</span>
+          <span className="tracking-kicker">SHREE GANESH OPTICAL SHOP</span>
           <h1>Track your {record?.type === 'repair' ? 'repair' : 'order'}</h1>
           <p>Enter the ID shared after checkout to see the latest update.</p>
         </div>

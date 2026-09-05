@@ -94,7 +94,7 @@ export const CartDrawer = ({
                 <ShieldCheck size={48} className="text-green" />
               </div>
               <h3>Order Placed Successfully!</h3>
-              <p>Thank you for choosing Verma Ji Ki Dukan. Your order is now visible to our team.</p>
+              <p>Thank you for choosing Shree Ganesh Optical Shop. Your order is now visible to our team.</p>
               <span className="order-id">Order ID: {placedOrder?.id}</span>
               <Link className="track-order-link" to={`/track/${placedOrder?.id}`} onClick={onClose}>Track this order</Link>
             </div>

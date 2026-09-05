@@ -64,7 +64,7 @@ export default function AdminLogin() {
       <section className="admin-login-card">
         <div className="admin-login-brand">
           <Store size={24} />
-          <span>Verma Ji Ki Dukan</span>
+          <span>Shree Ganesh Optical Shop</span>
         </div>
         <h1>Admin Login</h1>
         <p>Store manage karne ke liye login karein.</p>

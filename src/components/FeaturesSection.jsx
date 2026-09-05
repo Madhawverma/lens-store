@@ -52,7 +52,7 @@ export const FeaturesSection = () => {
           <span className="section-subtitle">ADVANCED OPTICAL CRAFT</span>
           <h2 className="section-title">We Take Vision & Protection Seriously</h2>
           <p className="features-desc">
-            Every Verma Ji Ki Dukan frame and lens goes through a stringent 14-point quality inspection to deliver supreme comfort, zero distortion, and timeless durability.
+            Every Shree Ganesh Optical Shop frame and lens goes through a stringent 14-point quality inspection to deliver supreme comfort, zero distortion, and timeless durability.
           </p>
         </div>
 

@@ -93,8 +93,9 @@
 
 .brand-col .footer-logo {
   display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 0.1rem;
   margin-bottom: 1rem;
 }
 
@@ -108,6 +109,12 @@
   font-size: 0.95rem;
   font-weight: 700;
   color: var(--accent-pink);
+}
+
+.brand-legacy {
+  color: #94a3b8;
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
 .footer-desc {

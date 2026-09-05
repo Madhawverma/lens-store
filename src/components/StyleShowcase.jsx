@@ -37,10 +37,10 @@ export const StyleShowcase = () => {
   return (
     <section className="style-showcase-section container">
       <div className="showcase-header">
-        <span className="showcase-nation-tag">VERMA JI KI DUKAN</span>
+        <span className="showcase-nation-tag">SHREE GANESH OPTICAL SHOP</span>
         <h2 className="showcase-main-title">From Everyday Looks to Iconic Styles</h2>
         <p className="showcase-subtitle">
-            Trusted by thousands of happy customers who’ve upgraded their style and vision with Verma Ji Ki Dukan’s high-quality eyewear.
+            Trusted by thousands of happy customers who’ve upgraded their style and vision with Shree Ganesh Optical Shop’s high-quality eyewear.
         </p>
 
         <div className="showcase-arrows">

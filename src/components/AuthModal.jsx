@@ -47,8 +47,8 @@ export const AuthModal = ({ isOpen, onClose }) => {
       <div className="auth-card" onClick={(e) => e.stopPropagation()}>
         <div className="auth-header">
           <div className="auth-logo-row">
-            <span className="auth-brand">Verma Ji Ki Dukan</span>
-            <span className="auth-tag">"चश्मा"</span>
+            <span className="auth-brand">Shree Ganesh Optical Shop</span>
+            <span className="auth-tag">(Verma Ji Ki Dukan)</span>
           </div>
           <button className="auth-close" onClick={onClose}>
             <X size={20} />
@@ -142,7 +142,7 @@ export const AuthModal = ({ isOpen, onClose }) => {
                 {error && <p className="auth-error">{error}</p>}
 
                 <button type="submit" className="btn-pink auth-submit-btn">
-                  {isLogin ? 'Sign In to Verma Ji Ki Dukan' : 'Register Account'} <ArrowRight size={16} />
+                  {isLogin ? 'Sign In to Shree Ganesh Optical Shop' : 'Register Account'} <ArrowRight size={16} />
                 </button>
               </form>
             </>

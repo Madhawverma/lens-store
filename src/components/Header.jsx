@@ -149,8 +149,9 @@ export const Header = ({
             <Glasses className="logo-icon" size={26} />
           </div>
           <div className="logo-text-group">
-            <span className="logo-title">Verma Ji Ki Dukan</span>
-            <span className="logo-hindi">"चश्मा"</span>
+            <span className="logo-title">Shree Ganesh Optical Shop</span>
+            <span className="logo-hindi">श्री गणेश</span>
+            <span className="logo-legacy">(Verma Ji Ki Dukan)</span>
           </div>
         </div>
 
@@ -281,7 +282,7 @@ export const Header = ({
           <div className="mobile-drawer-header">
             <div className="brand-logo">
               <Glasses size={22} />
-              <span>Verma Ji Ki Dukan</span>
+              <span>Shree Ganesh Optical Shop</span>
             </div>
             <button className="close-btn" onClick={() => setMobileMenuOpen(false)}>
               <X size={24} />

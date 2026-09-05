@@ -81,7 +81,7 @@
 }
 
 .logo-title {
-  font-size: 1.55rem;
+  font-size: clamp(1.1rem, 2vw, 1.55rem);
   font-weight: 900;
   letter-spacing: -0.5px;
   color: var(--primary);
@@ -93,6 +93,12 @@
   font-weight: 700;
   color: var(--accent-pink);
   letter-spacing: 1px;
+}
+
+.logo-legacy {
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  font-weight: 600;
 }
 
 /* Header Search */

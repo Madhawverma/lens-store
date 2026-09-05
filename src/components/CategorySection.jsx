@@ -99,7 +99,7 @@ export const CategorySection = ({ onSelectCategory }) => {
 
       {/* Main Title Heading */}
       <div className="store-intro-heading">
-        <h2>Best Eyewear Store in India – Verma Ji Ki Dukan</h2>
+        <h2>Best Eyewear Store in India – Shree Ganesh Optical Shop</h2>
         <p>A wide range of eyewear for men, women, and kids</p>
       </div>
 
@@ -153,7 +153,7 @@ export const CategorySection = ({ onSelectCategory }) => {
 
       {/* Section 3: Specials (Zero Power, Progressive, One Power, Clip-on) */}
       <div className="category-block">
-        <h3 className="category-heading-title">Verma Ji Ki Dukan Specials</h3>
+        <h3 className="category-heading-title">Shree Ganesh Optical Shop Specials</h3>
         <div className="portrait-grid">
           {vermaJiSpecials.map((item, idx) => (
             <div 

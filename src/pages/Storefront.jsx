@@ -312,7 +312,7 @@ export function Storefront() {
 
       {/* Floating WhatsApp Support Button */}
       <a 
-        href="https://wa.me/918770152422?text=Hello%20Verma%20Ji%20Ki%20Dukan%2C%20I%20need%20help%20with%20prescription%20eyewear" 
+        href="https://wa.me/918770152422?text=Hello%20Shree%20Ganesh%20Optical%20Shop%2C%20I%20need%20help%20with%20prescription%20eyewear" 
         target="_blank" 
         rel="noreferrer"
         className="whatsapp-float-btn"

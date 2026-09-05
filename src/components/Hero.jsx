@@ -39,7 +39,7 @@ export const Hero = ({ onExploreClick, onTurbanClick }) => {
 
           <div className="hero-customers-badge">
             <CheckCircle size={17} className="text-cyan-check" />
-            <span><strong>40,000+</strong> Customers Enjoying Verma Ji Ki Dukan</span>
+              <span><strong>40,000+</strong> Customers Enjoying Shree Ganesh Optical Shop</span>
           </div>
         </div>
 

@@ -65,7 +65,7 @@ export const ShopByNeed = ({ onSelectNeed }) => {
 
         <div className="banner-center-content">
           <h3 className="banner-big-title">New Design Frame</h3>
-          <p className="banner-sub">Discover the latest frames from Verma Ji Ki Dukan</p>
+          <p className="banner-sub">Discover the latest frames from Shree Ganesh Optical Shop</p>
           <button className="btn-cyan-shop" onClick={() => onSelectNeed('all')}>
             Shop Now
           </button>

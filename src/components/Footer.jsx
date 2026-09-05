@@ -44,11 +44,12 @@ export const Footer = ({ onSelectCategory }) => {
           {/* Brand Info */}
           <div className="footer-col brand-col">
             <div className="footer-logo">
-              <span className="brand-name">Verma Ji Ki Dukan</span>
-              <span className="brand-hi">"चश्मा"</span>
+              <span className="brand-name">Shree Ganesh Optical Shop</span>
+              <span className="brand-hi">श्री गणेश</span>
+              <span className="brand-legacy">(Verma Ji Ki Dukan)</span>
             </div>
             <p className="footer-desc">
-              Verma Ji Ki Dukan brings comfortable eyewear, lightweight frames, and everyday style from Sehore, Madhya Pradesh.
+              Shree Ganesh Optical Shop brings comfortable eyewear, lightweight frames, and everyday style from Sehore, Madhya Pradesh.
             </p>
             <div className="footer-social-links">
               <a href="https://www.instagram.com/madhaw.18" target="_blank" rel="noreferrer" className="social-icon" title="Instagram @madhaw.18">
@@ -121,7 +122,7 @@ export const Footer = ({ onSelectCategory }) => {
         {/* Bottom Bar */}
         <div className="footer-bottom-row">
           <p className="copyright-text">
-            Copyright 2026 © <strong>Verma Ji Ki Dukan</strong>. All Rights Reserved. Sehore, Madhya Pradesh.
+            Copyright 2026 © <strong>Shree Ganesh Optical Shop</strong>. All Rights Reserved. Sehore, Madhya Pradesh.
           </p>
           <div className="payment-badges-row">
             <span className="pay-pill">UPI</span>

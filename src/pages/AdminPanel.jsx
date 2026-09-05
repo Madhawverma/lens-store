@@ -111,7 +111,7 @@ export default function AdminPanel() {
       {/* Sidebar */}
       <aside className="admin-sidebar">
         <div className="admin-logo">
-          <h2>Verma Ji Ki Dukan</h2>
+          <h2>Shree Ganesh Optical Shop</h2>
         </div>
         <nav className="admin-nav">
           <Link to="/" className="nav-item">
