@@ -94,7 +94,7 @@ export default function AdminPanel() {
     <div className="table-container admin-records-table">
       <table className="products-table"><thead><tr><th>ID</th><th>Customer</th><th>{isRepair ? 'Issue' : 'Items'}</th><th>Total</th><th>Status</th><th>Track</th></tr></thead>
         <tbody>{records.length === 0 ? <tr><td colSpan="6" className="empty-records">No {isRepair ? 'repair tickets' : 'orders'} yet. New records will appear here automatically.</td></tr> : records.map((record) => <tr key={record.id}>
-          <td className="record-id">{record.id}</td><td><strong>{record.customer?.name}</strong><small className="record-phone">{record.customer?.phone}</small></td>
+          <td className="record-id">{record.id}</td><td><strong>{record.customer?.name}</strong><small className="record-phone">{record.customer?.phone}</small><small className="record-phone">{record.customer?.paymentMethod} · {record.customer?.deliveryDate}</small>{record.customer?.eyeTestRequested && <small className="record-eye-test">FREE EYE TEST REQUESTED</small>}</td>
           <td>{isRepair ? record.issue : `${record.items?.length || 0} item(s)`}</td><td className="table-price">₹{record.total || record.amount || 0}</td>
           <td><select className={`status-select status-${record.status}`} value={record.status} onChange={(event) => updateOrderStatus(record.id, event.target.value)}>{(isRepair ? REPAIR_STATUSES : ORDER_STATUSES).map((status) => <option key={status} value={status}>{status}</option>)}</select></td>
           <td><Link className="track-admin-link" to={`/track/${record.id}`} target="_blank"><ExternalLink size={15} /> View</Link></td>

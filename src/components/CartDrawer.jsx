@@ -17,7 +17,7 @@ export const CartDrawer = ({
   const [discountApplied, setDiscountApplied] = useState(false);
   const [checkoutSuccess, setCheckoutSuccess] = useState(false);
   const [placedOrder, setPlacedOrder] = useState(null);
-  const [customer, setCustomer] = useState({ name: '', phone: '' });
+  const [customer, setCustomer] = useState({ name: '', phone: '', address: '', paymentMethod: 'Cash on Delivery', deliveryDate: '', eyeTestRequested: false });
   const { createOrder } = useOrders();
 
   if (!isOpen) return null;
@@ -169,8 +169,21 @@ export const CartDrawer = ({
         {cartItems.length > 0 && !checkoutSuccess && (
           <div className="cart-footer">
             <div className="checkout-customer-fields">
-              <input value={customer.name} onChange={(event) => setCustomer({ ...customer, name: event.target.value })} placeholder="Your name" />
-              <input value={customer.phone} onChange={(event) => setCustomer({ ...customer, phone: event.target.value })} placeholder="Phone number" inputMode="tel" />
+              <input value={customer.name} onChange={(event) => setCustomer({ ...customer, name: event.target.value })} placeholder="Your name" required />
+              <input value={customer.phone} onChange={(event) => setCustomer({ ...customer, phone: event.target.value })} placeholder="Phone number" inputMode="tel" required />
+              <input value={customer.address} onChange={(event) => setCustomer({ ...customer, address: event.target.value })} placeholder="Delivery address" required />
+              <select value={customer.paymentMethod} onChange={(event) => setCustomer({ ...customer, paymentMethod: event.target.value })}>
+                <option>Cash on Delivery</option>
+                <option>UPI</option>
+                <option>Card on Delivery</option>
+              </select>
+              <label className="delivery-date-field">Preferred delivery date
+                <input type="date" min={new Date().toISOString().split('T')[0]} value={customer.deliveryDate} onChange={(event) => setCustomer({ ...customer, deliveryDate: event.target.value })} required />
+              </label>
+              <label className="eye-test-option">
+                <input type="checkbox" checked={customer.eyeTestRequested} onChange={(event) => setCustomer({ ...customer, eyeTestRequested: event.target.checked })} />
+                <span>Request a free eye test with my frame order</span>
+              </label>
             </div>
             {/* Promo Code Input */}
             <form onSubmit={handleApplyCoupon} className="coupon-form">
@@ -213,7 +226,7 @@ export const CartDrawer = ({
               </div>
             </div>
 
-            <button className="btn-pink checkout-btn" onClick={handleCheckout}>
+            <button className="btn-pink checkout-btn" onClick={handleCheckout} disabled={!customer.name || !customer.phone || !customer.address || !customer.deliveryDate}>
               Proceed to Secure Checkout <ArrowRight size={18} />
             </button>
 

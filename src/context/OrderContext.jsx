@@ -49,7 +49,12 @@ export function OrderProvider({ children }) {
       total,
       customer: {
         name: customer.name?.trim() || 'Guest customer',
-        phone: customer.phone?.trim() || 'Not provided'
+        phone: customer.phone?.trim() || 'Not provided',
+        address: customer.address?.trim() || 'Not provided',
+        paymentMethod: customer.paymentMethod || 'Cash on Delivery',
+        deliveryDate: customer.deliveryDate || 'To be confirmed',
+        eyeTestRequested: Boolean(customer.eyeTestRequested),
+        adminNote: customer.eyeTestRequested ? 'FREE EYE TEST REQUESTED with frame order.' : ''
       },
       timeline: [{ status: 'placed', at: new Date().toISOString(), note: 'Order received' }]
     };

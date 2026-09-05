@@ -328,6 +328,50 @@
   margin-bottom: 0.75rem;
 }
 
+.checkout-customer-fields {
+  display: grid;
+  gap: 0.55rem;
+  margin-bottom: 0.85rem;
+}
+
+.checkout-customer-fields input,
+.checkout-customer-fields select {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.7rem 0.8rem;
+  color: var(--text-main);
+  background: #fff;
+  font-size: 0.82rem;
+}
+
+.delivery-date-field,
+.eye-test-option {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.delivery-date-field {
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.eye-test-option {
+  align-items: center;
+}
+
+.eye-test-option input {
+  width: auto;
+}
+
+.checkout-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
 .secure-badge-footer {
   display: flex;
   align-items: center;

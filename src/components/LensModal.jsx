@@ -15,8 +15,8 @@ export const LensModal = ({ product, isOpen, onClose, onAddWithLens }) => {
     title: 'Customize Lens',
     badge: 'CUSTOM',
     price: Number(product.customLensPrice),
-    subtitle: 'Prescription lenses priced by the store admin.',
-    features: ['Custom prescription', 'Made for your frame', 'Price set by store']
+    subtitle: 'Prescription lenses customized for your frame.',
+    features: ['Custom prescription', 'Made for your frame', 'Store-fitted lenses']
   } : null;
   const lensOptions = customLens ? [...LENS_OPTIONS, customLens] : LENS_OPTIONS;
   const activeLens = lensOptions.some((lens) => lens.id === selectedLens.id) ? selectedLens : lensOptions[0];
@@ -65,7 +65,7 @@ export const LensModal = ({ product, isOpen, onClose, onAddWithLens }) => {
                     <h4 className="lens-title">{lens.title}</h4>
                   </div>
                   <div className="lens-price-tag">
-                    {lens.price === 0 ? 'FREE' : `+ ₹${lens.price}`}
+                    {lens.id === 'zero-power' ? '₹1' : 'Customize'}
                   </div>
                 </div>
 
