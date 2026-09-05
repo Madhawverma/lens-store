@@ -117,6 +117,12 @@
   color: #dc2626 !important;
 }
 
+.save-error {
+  color: #dc2626 !important;
+  font-weight: 600;
+  text-align: right;
+}
+
 .form-actions {
   display: flex;
   justify-content: flex-end;
@@ -157,4 +163,10 @@
   background: #0284c7;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2);
+}
+
+.btn-save:disabled {
+  cursor: wait;
+  opacity: 0.7;
+  transform: none;
 }

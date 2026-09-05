@@ -64,7 +64,7 @@ export const ProductProvider = ({ children }) => {
     }
   }, [products, isLoaded]);
 
-  const addProduct = (newProduct) => {
+  const addProduct = async (newProduct) => {
     // Generate a simple unique ID
     const productWithId = {
       ...newProduct,
@@ -77,8 +77,11 @@ export const ProductProvider = ({ children }) => {
       reviews: 0
     };
     
-    setProducts(prev => [productWithId, ...prev]); // Add to beginning
-    if (firebaseEnabled && db) setDoc(doc(db, 'products', String(productWithId.id)), productWithId);
+    if (firebaseEnabled && db) {
+      await setDoc(doc(db, 'products', String(productWithId.id)), productWithId);
+    }
+    setProducts(prev => [productWithId, ...prev]);
+    return productWithId;
   };
 
   const updateProduct = (id, changes) => {

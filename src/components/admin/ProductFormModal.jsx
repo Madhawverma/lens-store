@@ -30,41 +30,52 @@ export const ProductFormModal = ({ onClose, product = null, onUpdate, language =
   });
   const [imageError, setImageError] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
+  const [saveError, setSaveError] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isSaving) return;
+    setSaveError('');
+    setIsSaving(true);
     let selectedImage = formData.image;
     if (firebaseEnabled && selectedFile) {
       try {
         selectedImage = await uploadProductImage(selectedFile);
       } catch (error) {
         setImageError('Image upload failed. Please try again.');
+        setIsSaving(false);
         return;
       }
     }
-    
-    if (product) {
-      onUpdate(product.id, { ...formData, image: selectedImage });
+
+    try {
+      if (product) {
+        onUpdate(product.id, { ...formData, image: selectedImage });
+        onClose();
+        return;
+      }
+
+      const newProduct = {
+        name: formData.name,
+        price: Number(formData.price),
+        discount: formData.discount ? Number(formData.discount) : null,
+        category: formData.category,
+        type: formData.type,
+        shape: formData.shape,
+        image: selectedImage || '/images/pill_eyeglasses.png',
+        hoverImage: selectedImage || '/images/pill_sunglasses.png',
+        originalPrice: Number(formData.price),
+        tags: ['new-arrivals'],
+      };
+
+      await addProduct(newProduct);
       onClose();
-      return;
+    } catch (error) {
+      setSaveError('Product could not be saved. Check Firebase Firestore permissions and try again.');
+    } finally {
+      setIsSaving(false);
     }
-
-    const newProduct = {
-      name: formData.name,
-      price: Number(formData.price),
-      discount: formData.discount ? Number(formData.discount) : null,
-      category: formData.category,
-      type: formData.type,
-      shape: formData.shape,
-      // Create an array with the single image, or a default placeholder
-      image: selectedImage || '/images/pill_eyeglasses.png',
-      hoverImage: selectedImage || '/images/pill_sunglasses.png',
-      originalPrice: Number(formData.price),
-      tags: ['new-arrivals'],
-    };
-
-    addProduct(newProduct);
-    onClose();
   };
 
   const handleChange = (e) => {
@@ -178,8 +189,9 @@ export const ProductFormModal = ({ onClose, product = null, onUpdate, language =
 
           <div className="form-actions">
             <button type="button" className="btn-cancel" onClick={onClose}>{text.cancel}</button>
-            <button type="submit" className="btn-save">{product ? text.update : text.save}</button>
+            <button type="submit" className="btn-save" disabled={isSaving}>{isSaving ? 'Saving...' : product ? text.update : text.save}</button>
           </div>
+          {saveError && <small className="save-error">{saveError}</small>}
         </form>
       </div>
     </div>
