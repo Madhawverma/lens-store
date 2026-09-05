@@ -10,10 +10,20 @@ export const LensModal = ({ product, isOpen, onClose, onAddWithLens }) => {
 
   if (!isOpen || !product) return null;
 
-  const totalPrice = product.price + selectedLens.price;
+  const customLens = product.customLensPrice > 0 ? {
+    id: `custom-${product.id}`,
+    title: 'Customize Lens',
+    badge: 'CUSTOM',
+    price: Number(product.customLensPrice),
+    subtitle: 'Prescription lenses priced by the store admin.',
+    features: ['Custom prescription', 'Made for your frame', 'Price set by store']
+  } : null;
+  const lensOptions = customLens ? [...LENS_OPTIONS, customLens] : LENS_OPTIONS;
+  const activeLens = lensOptions.some((lens) => lens.id === selectedLens.id) ? selectedLens : lensOptions[0];
+  const totalPrice = product.price + activeLens.price;
 
   const handleConfirm = () => {
-    onAddWithLens(product, selectedLens, powerNote);
+    onAddWithLens(product, activeLens, powerNote);
     onClose();
   };
 
@@ -43,10 +53,10 @@ export const LensModal = ({ product, isOpen, onClose, onAddWithLens }) => {
 
           <h3 className="options-title">1. Choose Lens Package</h3>
           <div className="lens-options-grid">
-            {LENS_OPTIONS.map((lens) => (
+            {lensOptions.map((lens) => (
               <div 
                 key={lens.id} 
-                className={`lens-option-card ${selectedLens.id === lens.id ? 'active' : ''}`}
+                className={`lens-option-card ${activeLens.id === lens.id ? 'active' : ''}`}
                 onClick={() => setSelectedLens(lens)}
               >
                 <div className="lens-card-top">
@@ -70,7 +80,7 @@ export const LensModal = ({ product, isOpen, onClose, onAddWithLens }) => {
                 </ul>
 
                 <div className="radio-indicator">
-                  <div className={`radio-dot ${selectedLens.id === lens.id ? 'selected' : ''}`}></div>
+                  <div className={`radio-dot ${activeLens.id === lens.id ? 'selected' : ''}`}></div>
                 </div>
               </div>
             ))}
@@ -122,7 +132,7 @@ export const LensModal = ({ product, isOpen, onClose, onAddWithLens }) => {
             <span className="calc-label">Total Amount:</span>
             <div className="calc-price-group">
               <span className="total-val">₹{totalPrice}</span>
-              <span className="total-breakup">(Frame ₹{product.price} + Lens {selectedLens.price === 0 ? '₹0' : `₹${selectedLens.price}`})</span>
+              <span className="total-breakup">(Frame ₹{product.price} + Lens ₹{activeLens.price})</span>
             </div>
           </div>
 

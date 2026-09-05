@@ -14,7 +14,7 @@ export const ProductFormModal = ({ onClose, product = null, onUpdate, language =
     choose: 'अपने डिवाइस से इमेज चुनें। अधिकतम साइज़: 5 MB।'
   } : {
     edit: 'Edit Product Price', add: 'Add New Product', name: 'Product Name', price: 'Price (₹)',
-    discount: 'Discount (%)', category: 'Category', shape: 'Frame Shape', image: 'Product Image',
+    discount: 'Discount (%)', category: 'Category', shape: 'Frame Shape', image: 'Product Image', customLensPrice: 'Custom Lens Price (₹)',
     cancel: 'Cancel', update: 'Update Product', save: 'Save Product',
     choose: 'Select an image directly from your device. Maximum size: 5 MB.'
   };
@@ -26,6 +26,7 @@ export const ProductFormModal = ({ onClose, product = null, onUpdate, language =
     category: product?.category || 'eyeglasses',
     type: product?.type || 'Eyeglasses',
     shape: product?.shape || 'Rectangle',
+    customLensPrice: product?.customLensPrice || '',
     image: product?.image || product?.images?.[0] || ''
   });
   const [imageError, setImageError] = useState('');
@@ -60,6 +61,7 @@ export const ProductFormModal = ({ onClose, product = null, onUpdate, language =
         name: formData.name,
         price: Number(formData.price),
         discount: formData.discount ? Number(formData.discount) : null,
+        customLensPrice: formData.customLensPrice ? Number(formData.customLensPrice) : 0,
         category: formData.category,
         type: formData.type,
         shape: formData.shape,
@@ -173,6 +175,19 @@ export const ProductFormModal = ({ onClose, product = null, onUpdate, language =
                 <option value="Wayfarer">Wayfarer</option>
               </select>
             </div>
+          </div>
+
+          <div className="form-group">
+            <label>{text.customLensPrice || 'Custom Lens Price (₹)'}</label>
+            <input
+              type="number"
+              name="customLensPrice"
+              min="0"
+              value={formData.customLensPrice}
+              onChange={handleChange}
+              placeholder="e.g. 799 (Optional)"
+            />
+            <small>Customers will see this price under Customize Lens.</small>
           </div>
 
           <div className="form-group">

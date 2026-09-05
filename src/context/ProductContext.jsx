@@ -72,6 +72,7 @@ export const ProductProvider = ({ children }) => {
       image: newProduct.image || newProduct.images?.[0],
       hoverImage: newProduct.hoverImage || newProduct.images?.[1] || newProduct.image,
       originalPrice: newProduct.originalPrice || newProduct.price,
+      customLensPrice: Number(newProduct.customLensPrice || 0),
       isNew: true, // mark as new arrival
       rating: 5,
       reviews: 0
@@ -93,7 +94,8 @@ export const ProductProvider = ({ children }) => {
       hoverImage: changes.image || changes.hoverImage || updatedProduct.hoverImage || updatedProduct.images?.[1],
       price: Number(changes.price),
       originalPrice: Number(changes.originalPrice || changes.price),
-      discount: changes.discount ? Number(changes.discount) : null
+      discount: changes.discount ? Number(changes.discount) : null,
+      customLensPrice: Number(changes.customLensPrice || 0)
     } : null;
     setProducts(prev => prev.map(product => product.id === id ? {
       ...product,
@@ -102,7 +104,8 @@ export const ProductProvider = ({ children }) => {
       hoverImage: changes.image || changes.hoverImage || product.hoverImage || product.images?.[1],
       price: Number(changes.price),
       originalPrice: Number(changes.originalPrice || changes.price),
-      discount: changes.discount ? Number(changes.discount) : null
+      discount: changes.discount ? Number(changes.discount) : null,
+      customLensPrice: Number(changes.customLensPrice || 0)
     } : product));
     if (firebaseEnabled && db && nextProduct) setDoc(doc(db, 'products', String(id)), nextProduct);
   };
