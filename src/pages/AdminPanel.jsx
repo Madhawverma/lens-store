@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useProducts } from '../context/ProductContext';
 import { ProductFormModal } from '../components/admin/ProductFormModal';
 import { Plus, Edit2, Trash2, Home, Package, Users, Settings, ClipboardList, Wrench, TrendingUp, ExternalLink } from 'lucide-react';
@@ -18,6 +18,8 @@ export default function AdminPanel() {
   const [language, setLanguage] = useState(() => localStorage.getItem('admin_language') || 'en');
   const [repairForm, setRepairForm] = useState({ name: '', phone: '', issue: '', amount: '' });
   const [actionError, setActionError] = useState('');
+  const [orderAlert, setOrderAlert] = useState('');
+  const knownOrderIds = useRef(null);
   const navigate = useNavigate();
   const isHindi = language === 'hi';
   const text = isHindi ? {
@@ -92,6 +94,31 @@ export default function AdminPanel() {
   };
   const activeMeta = sectionMeta[activeSection];
 
+  useEffect(() => {
+    if (knownOrderIds.current === null) {
+      knownOrderIds.current = new Set(orders.map((record) => record.id));
+      return;
+    }
+    const newRecords = orders.filter((record) => !knownOrderIds.current.has(record.id));
+    knownOrderIds.current = new Set(orders.map((record) => record.id));
+    if (newRecords.length === 0) return;
+    const newest = newRecords[0];
+    const message = newest.type === 'repair'
+      ? `New repair request: ${newest.id}`
+      : `New order from ${newest.customer?.name || 'customer'}: ${newest.id}`;
+    setOrderAlert(message);
+    const browserNotification = window.Notification;
+    if (browserNotification?.permission === 'granted') {
+      new browserNotification('Shree Ganesh Optical Shop', { body: message });
+    }
+    const timer = window.setTimeout(() => setOrderAlert(''), 7000);
+    return () => window.clearTimeout(timer);
+  }, [orders]);
+
+  const enableOrderAlerts = async () => {
+    if ('Notification' in window && Notification.permission === 'default') await Notification.requestPermission();
+  };
+
   const renderRecordTable = (records, isRepair = false) => (
     <div className="table-container admin-records-table">
       <table className="products-table"><thead><tr><th>ID</th><th>Customer</th><th>{isRepair ? 'Issue' : 'Items'}</th><th>Total</th><th>Status</th><th>Track</th></tr></thead>
@@ -148,11 +175,14 @@ export default function AdminPanel() {
             <h1>{activeMeta[0]}</h1><p>{activeMeta[1]}</p>
           </div>
           <button className="admin-logout-btn" onClick={handleLogout}>{text.logout}</button>
+          <button className="admin-alert-btn" onClick={enableOrderAlerts} title="Enable new order notifications">Enable alerts</button>
           {activeSection === 'products' && <button className="btn-add-product" onClick={() => setIsModalOpen(true)}>
             <Plus size={18} /> {text.addProduct}
           </button>}
           {activeSection === 'repairs' && <button className="btn-add-product" onClick={() => document.getElementById('repair-form')?.scrollIntoView({ behavior: 'smooth' })}><Plus size={18} /> New repair</button>}
         </header>
+
+        {orderAlert && <div className="admin-order-alert" role="status">{orderAlert}</div>}
 
         {activeSection === 'orders' ? renderRecordTable(orderRecords) : activeSection === 'repairs' ? <>
           <form id="repair-form" className="repair-form" onSubmit={(event) => { event.preventDefault(); if (!repairForm.name || !repairForm.issue) return; createRepair({ customer: { name: repairForm.name, phone: repairForm.phone || 'Not provided' }, issue: repairForm.issue, amount: Number(repairForm.amount || 0), total: Number(repairForm.amount || 0) }); setRepairForm({ name: '', phone: '', issue: '', amount: '' }); }}>
