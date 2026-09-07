@@ -49,7 +49,10 @@ export const ProductProvider = ({ children }) => {
       for (let start = 0; start < PRODUCTS_DATA.length; start += 500) {
         const batch = writeBatch(db);
         PRODUCTS_DATA.slice(start, start + 500).forEach((product) => {
-          batch.set(doc(db, 'products', String(product.id)), product);
+          batch.set(doc(db, 'products', String(product.id)), {
+            ...product,
+            stock: product.stock ?? 10
+          });
         });
         await batch.commit();
       }

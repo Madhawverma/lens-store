@@ -90,26 +90,33 @@ export function OrderProvider({ children }) {
       timeline: [{ status: 'placed', at: createdAt, note: 'Order received' }]
     };
     if (firebaseEnabled && db && currentUser) {
-      await ensureUserProfile(currentUser);
-      await updateUserProfile(currentUser, {
-        displayName: customer.name?.trim() || currentUser.displayName || '',
-        phone: customer.phone?.trim() || '',
-        address: customer.address?.trim() || ''
-      });
-      await runTransaction(db, async (transaction) => {
-        const productRefs = items.map((item) => doc(db, 'products', String(item.id)));
-        const productSnapshots = await Promise.all(productRefs.map((productRef) => transaction.get(productRef)));
-        productSnapshots.forEach((snapshot, index) => {
-          const available = Number(snapshot.data()?.stock ?? 0);
-          if (!snapshot.exists() || available < items[index].quantity) {
-            throw new Error(`${items[index].name} is no longer available in the requested quantity.`);
-          }
+      try {
+        await ensureUserProfile(currentUser);
+        await updateUserProfile(currentUser, {
+          displayName: customer.name?.trim() || currentUser.displayName || '',
+          phone: customer.phone?.trim() || '',
+          address: customer.address?.trim() || ''
         });
-        productSnapshots.forEach((snapshot, index) => {
-          transaction.update(productRefs[index], { stock: Number(snapshot.data().stock ?? 0) - items[index].quantity });
+        await runTransaction(db, async (transaction) => {
+          const productRefs = items.map((item) => doc(db, 'products', String(item.id)));
+          const productSnapshots = await Promise.all(productRefs.map((productRef) => transaction.get(productRef)));
+          productSnapshots.forEach((snapshot, index) => {
+            const available = Number(snapshot.data()?.stock ?? 10);
+            if (!snapshot.exists() || available < items[index].quantity) {
+              throw new Error(`${items[index].name} is no longer available in the requested quantity.`);
+            }
+          });
+          productSnapshots.forEach((snapshot, index) => {
+            transaction.update(productRefs[index], { stock: Number(snapshot.data().stock ?? 10) - items[index].quantity });
+          });
+          transaction.set(doc(db, 'orders', order.id), order);
         });
-        transaction.set(doc(db, 'orders', order.id), order);
-      });
+      } catch (error) {
+        if (error.code === 'permission-denied') {
+          throw new Error('Firebase permission denied. Refresh the app and sign in again before checkout.');
+        }
+        throw error;
+      }
     }
     setOrders((current) => [order, ...current.filter((existing) => existing.id !== order.id)]);
     return order;
