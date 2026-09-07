@@ -473,3 +473,16 @@
   .action-label { display: none; }
   .logo-title { font-size: 1.35rem; }
 }
+
+@media (max-width: 540px) {
+  .header-main { gap: .45rem; padding: .65rem .85rem; }
+  .brand-logo { min-width: 0; gap: .4rem; }
+  .logo-icon-wrap { width: 36px; height: 36px; border-radius: 9px; }
+  .logo-icon { width: 21px; height: 21px; }
+  .logo-title { font-size: .92rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .logo-hindi { font-size: .68rem; }
+  .logo-legacy { font-size: .58rem; }
+  .header-actions { gap: .1rem; }
+  .action-btn { padding: .25rem; }
+  .cart-btn-highlight { padding: .3rem .4rem; }
+}

@@ -77,9 +77,12 @@ a {
 /* Container */
 .container {
   max-width: 1440px;
+  width: 100%;
   margin: 0 auto;
   padding: 0 1.25rem;
 }
+
+img, svg { max-width: 100%; }
 
 /* Animations */
 @keyframes fadeIn {
