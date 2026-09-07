@@ -8,7 +8,7 @@ export const StyleShowcase = () => {
   const styleItems = [
     {
       title: 'CEO Look',
-      img: '/images/user_model.png',
+      img: '/images/image.png',
       tag: 'Glasses Elegance'
     },
     {

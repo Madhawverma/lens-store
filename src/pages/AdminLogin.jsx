@@ -17,10 +17,8 @@ export default function AdminLogin() {
     if (isSubmitting) return;
     setIsSubmitting(true);
     try {
-      const validLocalLogin = loginId.trim() === '8770152422' && password === '1318';
-      const validLogin = firebaseEnabled ? await signInAdmin(loginId.trim(), password) : validLocalLogin;
+      const validLogin = firebaseEnabled ? await signInAdmin(loginId.trim(), password) : false;
       if (validLogin) {
-        localStorage.setItem('verma_admin_session', 'true');
         navigate('/admin');
         return;
       }
@@ -31,7 +29,8 @@ export default function AdminLogin() {
         'auth/user-not-found': 'Firebase Authentication Users में admin user नहीं मिला.',
         'auth/wrong-password': 'You entered the wrong password or email. Please log in again.',
         'auth/invalid-email': 'Valid Firebase email या 8770152422 डालें.',
-        'auth/operation-not-allowed': 'Firebase में Email/Password sign-in enable करें.'
+        'auth/operation-not-allowed': 'Firebase में Email/Password sign-in enable करें.',
+        'auth/admin-not-authorized': 'This account is not authorized as an admin.'
       };
       setError(messages[loginError.code] || `Firebase login failed: ${loginError.code || 'unknown error'}`);
     } finally {

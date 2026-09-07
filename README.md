@@ -105,6 +105,17 @@ In the Firebase console:
 4. Create a Firestore database.
 5. Enable Storage for product image uploads.
 6. Create the admin user using the email configured in `VITE_ADMIN_EMAIL`.
+7. In Firestore, create `users/{adminUid}` with `uid`, `email`, and `role: "admin"`.
+8. Deploy the included `firestore.rules` and `storage.rules` files from the Firebase CLI:
+
+```bash
+firebase deploy --only firestore:rules,storage
+```
+
+Admin access is granted only when the signed-in Firebase user has `role: "admin"` in
+`users/{uid}`. The app no longer trusts a browser localStorage admin flag. Customer
+orders are stored with the authenticated customer UID and Firestore rules limit reads
+to that customer or an admin.
 
 Never commit `.env` files or private credentials. Only variables prefixed with `VITE_` are available to the browser, so Firebase security rules must protect production data.
 

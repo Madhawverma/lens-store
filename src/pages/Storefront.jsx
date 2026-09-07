@@ -20,16 +20,17 @@ import { ShopByNeed } from '../components/ShopByNeed';
 import { ShapeGrid } from '../components/ShapeGrid';
 import { ProductGridSection } from '../components/ProductGridSection';
 import { RepairModal } from '../components/RepairModal';
+import { AccountDrawer } from '../components/AccountDrawer';
 import { useProducts } from '../context/ProductContext';
 import { Filter, SlidersHorizontal, Sparkles, MessageCircle, Check, ArrowDown, ArrowUp } from 'lucide-react';
 import '../App.css';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../lib/firebase';
+import { auth, ensureUserProfile } from '../lib/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 
 export function Storefront() {
   const navigate = useNavigate();
-  const { products: allProducts, decreaseStock } = useProducts();
+  const { products: allProducts } = useProducts();
 
   // State variables
   const [activeCategory, setActiveCategory] = useState('all');
@@ -45,6 +46,7 @@ export function Storefront() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isRepairOpen, setIsRepairOpen] = useState(false);
+  const [isAccountOpen, setIsAccountOpen] = useState(false);
   const [customerUser, setCustomerUser] = useState(null);
   
   // Active selected item for Modals
@@ -52,12 +54,35 @@ export function Storefront() {
   const [quickViewProduct, setQuickViewProduct] = useState(null);
 
   // Cart & Wishlist state
-  const [cartItems, setCartItems] = useState([]);
-  const [wishlistItems, setWishlistItems] = useState([]);
+  const [cartItems, setCartItems] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('verma_ji_cart_v1') || '[]');
+    } catch {
+      return [];
+    }
+  });
+  const [wishlistItems, setWishlistItems] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('verma_ji_wishlist_v1') || '[]');
+    } catch {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem('verma_ji_cart_v1', JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  useEffect(() => {
+    localStorage.setItem('verma_ji_wishlist_v1', JSON.stringify(wishlistItems));
+  }, [wishlistItems]);
 
   useEffect(() => {
     if (!auth) return undefined;
-    return onAuthStateChanged(auth, setCustomerUser);
+    return onAuthStateChanged(auth, async (user) => {
+      if (user) await ensureUserProfile(user).catch(() => null);
+      setCustomerUser(user);
+    });
   }, []);
 
   // Category & Filter Handler
@@ -216,6 +241,8 @@ export function Storefront() {
         onOpenWishlist={() => setIsWishlistOpen(true)}
         onOpenSearch={() => setIsSearchOpen(true)}
         onOpenAuth={() => setIsAuthOpen(true)}
+        onOpenAccount={() => setIsAccountOpen(true)}
+        customerUser={customerUser}
         activeCategory={activeCategory}
         onSelectCategory={handleSelectCategory}
       />
@@ -373,7 +400,6 @@ export function Storefront() {
         onUpdateQuantity={handleUpdateQuantity}
         onRemoveItem={handleRemoveFromCart}
         onClearCart={() => setCartItems([])}
-        onOrderPlaced={decreaseStock}
         isCustomerLoggedIn={Boolean(customerUser)}
         onRequireLogin={() => setIsAuthOpen(true)}
       />
@@ -396,6 +422,13 @@ export function Storefront() {
       <AuthModal 
         isOpen={isAuthOpen}
         onClose={() => setIsAuthOpen(false)}
+      />
+
+      <AccountDrawer
+        isOpen={isAccountOpen}
+        onClose={() => setIsAccountOpen(false)}
+        user={customerUser}
+        onSignedOut={() => setCustomerUser(null)}
       />
 
       <RepairModal isOpen={isRepairOpen} onClose={() => setIsRepairOpen(false)} />

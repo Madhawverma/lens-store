@@ -7,19 +7,30 @@ export const RepairModal = ({ isOpen, onClose }) => {
   const { createRepair } = useOrders();
   const [form, setForm] = useState({ name: '', phone: '', issue: '', amount: '' });
   const [submittedRepair, setSubmittedRepair] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
   if (!isOpen) return null;
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const repair = createRepair({
-      customer: { name: form.name, phone: form.phone },
-      issue: form.issue,
-      amount: Number(form.amount || 0),
-      total: Number(form.amount || 0)
-    });
-    setSubmittedRepair(repair);
-    setForm({ name: '', phone: '', issue: '', amount: '' });
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+    setError('');
+    try {
+      const repair = await createRepair({
+        customer: { name: form.name, phone: form.phone },
+        issue: form.issue,
+        amount: Number(form.amount || 0),
+        total: Number(form.amount || 0)
+      });
+      setSubmittedRepair(repair);
+      setForm({ name: '', phone: '', issue: '', amount: '' });
+    } catch {
+      setError('Repair request could not be submitted. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleClose = () => {
@@ -53,7 +64,8 @@ export const RepairModal = ({ isOpen, onClose }) => {
             <label>Phone number<input required inputMode="tel" value={form.phone} onChange={(event) => setForm({ ...form, phone: event.target.value })} placeholder="Enter your phone number" /></label>
             <label>What needs repair?<textarea required value={form.issue} onChange={(event) => setForm({ ...form, issue: event.target.value })} placeholder="Example: loose arm, broken hinge, scratched lens" /></label>
             <label>Estimated budget (optional)<input type="number" min="0" value={form.amount} onChange={(event) => setForm({ ...form, amount: event.target.value })} placeholder="₹ Amount" /></label>
-            <button className="btn-pink" type="submit"><Wrench size={17} /> Submit Repair Request</button>
+            {error && <p className="auth-error">{error}</p>}
+            <button className="btn-pink" type="submit" disabled={isSubmitting}><Wrench size={17} /> {isSubmitting ? 'Submitting...' : 'Submit Repair Request'}</button>
           </form>
         )}
       </div>

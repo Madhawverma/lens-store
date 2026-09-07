@@ -5,7 +5,7 @@ export const CategorySection = ({ onSelectCategory }) => {
   const eyeglassesPeople = [
     {
       title: 'Men',
-      img: '/images/user_model.png',
+      img: '/images/image.png',
       bgColor: '#dbeafe'
     },
     {
@@ -21,7 +21,7 @@ export const CategorySection = ({ onSelectCategory }) => {
     },
     {
       title: 'Essentials',
-      img: '/images/user_model.png',
+      img: '/images/image.png',
       bgColor: '#bae6fd'
     }
   ];
@@ -29,7 +29,7 @@ export const CategorySection = ({ onSelectCategory }) => {
   const sunglassesPeople = [
     {
       title: 'Men',
-      img: '/images/user_model.png',
+      img: '/images/image.png',
       bgColor: '#fef08a'
     },
     {
@@ -53,7 +53,7 @@ export const CategorySection = ({ onSelectCategory }) => {
   const vermaJiSpecials = [
     {
       title: 'Zero Power',
-      img: '/images/user_model.png',
+      img: '/images/image.png',
       bgColor: '#dcfce7'
     },
     {

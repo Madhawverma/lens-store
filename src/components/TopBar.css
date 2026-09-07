@@ -1,6 +1,36 @@
-.top-bar {
+.devotional-bar {
   position: sticky;
   top: 0;
+  width: 100%;
+  height: 28px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  background: #fff8e1;
+  border-bottom: 1px solid #f6d365;
+  color: #8a4b08;
+  z-index: 1001;
+}
+
+.devotional-track {
+  display: flex;
+  width: max-content;
+  animation: devotionalScroll 11s linear infinite;
+}
+
+.devotional-track span {
+  min-width: 180px;
+  padding: 0 32px;
+  text-align: center;
+  white-space: nowrap;
+  font-family: 'Noto Sans Devanagari', 'Mangal', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.top-bar {
+  position: sticky;
+  top: 28px;
   width: 100%;
   background: linear-gradient(90deg, #000040, #001a66);
   z-index: 1000;
@@ -92,7 +122,13 @@
   }
 }
 
+@keyframes devotionalScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 @media (max-width: 768px) {
+  .devotional-track span { min-width: 150px; padding: 0 22px; font-size: 12px; }
   .ticker-track span {
     font-size: 12px;
     padding-right: 35px;
