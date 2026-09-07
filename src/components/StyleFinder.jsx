@@ -8,11 +8,11 @@ export const StyleFinder = ({ onSelectStyle }) => {
   const menLooks = [
     {
       title: 'CEO Look',
-      img: '/images/user_model.png',
+      img: '/images/image.png',
     },
     {
       title: 'Street Style',
-      img: '/images/user_model.png',
+      img: '/images/image.png',
     },
     {
       title: 'Nawab Style',

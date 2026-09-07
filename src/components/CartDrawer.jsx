@@ -12,7 +12,6 @@ export const CartDrawer = ({
   onUpdateQuantity, 
   onRemoveItem,
   onClearCart,
-  onOrderPlaced,
   isCustomerLoggedIn,
   onRequireLogin
 }) => {
@@ -21,6 +20,7 @@ export const CartDrawer = ({
   const [checkoutSuccess, setCheckoutSuccess] = useState(false);
   const [placedOrder, setPlacedOrder] = useState(null);
   const [checkoutError, setCheckoutError] = useState('');
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [customer, setCustomer] = useState({ name: '', phone: '', address: '', paymentMethod: 'Cash on Delivery', deliveryDate: '', eyeTestRequested: false });
   const { createOrder } = useOrders();
 
@@ -30,6 +30,7 @@ export const CartDrawer = ({
   const discountAmount = discountApplied ? Math.round(subtotal * 0.15) : 0;
   const finalTotal = subtotal - discountAmount;
   const freeShippingThreshold = 999;
+  const shippingCost = subtotal >= freeShippingThreshold ? 0 : 99;
   const freeShippingProgress = Math.min(100, (subtotal / freeShippingThreshold) * 100);
 
   const handleApplyCoupon = (e) => {
@@ -46,7 +47,8 @@ export const CartDrawer = ({
     }
   };
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
+    if (isCheckingOut) return;
     if (!isCustomerLoggedIn) {
       onRequireLogin();
       return;
@@ -57,20 +59,22 @@ export const CartDrawer = ({
       return;
     }
     setCheckoutError('');
-    const order = createOrder({ items: cartItems, total: finalTotal + (subtotal >= freeShippingThreshold ? 0 : 99), customer });
-    onOrderPlaced(cartItems);
-    setPlacedOrder(order);
-    confetti({
-      particleCount: 150,
-      spread: 90,
-      origin: { y: 0.5 }
-    });
-    setCheckoutSuccess(true);
-    setTimeout(() => {
-      onClearCart();
-      setCheckoutSuccess(false);
-      onClose();
-    }, 3500);
+    setIsCheckingOut(true);
+    try {
+      const order = await createOrder({ items: cartItems, total: finalTotal + shippingCost, customer });
+      setPlacedOrder(order);
+      confetti({ particleCount: 150, spread: 90, origin: { y: 0.5 } });
+      setCheckoutSuccess(true);
+      setTimeout(() => {
+        onClearCart();
+        setCheckoutSuccess(false);
+        onClose();
+      }, 3500);
+    } catch (error) {
+      setCheckoutError(error.message || 'Order could not be placed. Please try again.');
+    } finally {
+      setIsCheckingOut(false);
+    }
   };
 
   return (
@@ -239,12 +243,12 @@ export const CartDrawer = ({
               </div>
               <div className="summary-line total-line">
                 <strong>Grand Total</strong>
-                <strong className="grand-total-val">₹{finalTotal}</strong>
+                <strong className="grand-total-val">₹{finalTotal + shippingCost}</strong>
               </div>
             </div>
 
-            <button className="btn-pink checkout-btn" onClick={handleCheckout} disabled={!customer.name || !customer.phone || !customer.address || !customer.deliveryDate}>
-              Proceed to Secure Checkout <ArrowRight size={18} />
+            <button className="btn-pink checkout-btn" onClick={handleCheckout} disabled={isCheckingOut || !customer.name || !customer.phone || !customer.address || !customer.deliveryDate}>
+              {isCheckingOut ? 'Placing Order...' : 'Proceed to Secure Checkout'} <ArrowRight size={18} />
             </button>
 
             <div className="secure-badge-footer">

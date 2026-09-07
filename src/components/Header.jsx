@@ -24,6 +24,8 @@ export const Header = ({
   onOpenWishlist,
   onOpenSearch,
   onOpenAuth,
+  onOpenAccount,
+  customerUser,
   activeCategory,
   onSelectCategory
 }) => {
@@ -172,9 +174,9 @@ export const Header = ({
             <Search size={22} />
           </button>
 
-          <button className="action-btn" onClick={onOpenAuth} title="My Account">
+          <button className="action-btn account-action-btn" onClick={customerUser ? onOpenAccount : onOpenAuth} title="My Account">
             <User size={22} />
-            <span className="action-label">Login</span>
+            <span className="action-label">{customerUser ? (customerUser.displayName?.split(' ')[0] || 'Account') : 'Login'}</span>
           </button>
 
           <Link className="action-btn" to="/admin" title="Admin Panel">

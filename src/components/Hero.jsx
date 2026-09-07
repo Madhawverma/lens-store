@@ -48,7 +48,7 @@ export const Hero = ({ onExploreClick, onTurbanClick }) => {
           {/* Card 1: New Arrival Model (User's Photo with glasses) */}
           <div className="model-portrait-card" role="button" tabIndex={0} onClick={() => onExploreClick('new-arrivals')} onKeyDown={(event) => event.key === 'Enter' && onExploreClick('new-arrivals')}>
             <img 
-              src="/images/user_model.png" 
+              src="/images/image.png"
               alt="New Arrival Glasses" 
               className="model-img" 
             />

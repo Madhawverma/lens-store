@@ -53,7 +53,7 @@ export const ProductFormModal = ({ onClose, product = null, onUpdate, language =
 
     try {
       if (product) {
-        onUpdate(product.id, { ...formData, image: selectedImage });
+        await onUpdate(product.id, { ...formData, image: selectedImage });
         onClose();
         return;
       }

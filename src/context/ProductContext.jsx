@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { PRODUCTS_DATA } from '../data/products';
-import { collection, deleteDoc, doc, getDocs, setDoc, writeBatch } from 'firebase/firestore';
+import { collection, deleteDoc, doc, onSnapshot, setDoc, writeBatch } from 'firebase/firestore';
 import { db, firebaseEnabled } from '../lib/firebase';
 
 const ProductContext = createContext();
@@ -10,6 +10,7 @@ export const useProducts = () => useContext(ProductContext);
 export const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState(() => PRODUCTS_DATA.map((product) => ({ ...product, stock: product.stock ?? 10 })));
   const [isLoaded, setIsLoaded] = useState(false);
+  const [syncError, setSyncError] = useState('');
 
   useEffect(() => {
     // Load from localStorage on initial render
@@ -36,25 +37,27 @@ export const ProductProvider = ({ children }) => {
 
   useEffect(() => {
     if (!firebaseEnabled || !db) return;
-    const syncCloudCatalog = async () => {
-      try {
-        const snapshot = await getDocs(collection(db, 'products'));
-        if (!snapshot.empty) {
-          setProducts(snapshot.docs.map((product) => ({ ...product.data(), stock: product.data().stock ?? 10 })));
-          return;
-        }
-        for (let start = 0; start < PRODUCTS_DATA.length; start += 500) {
-          const batch = writeBatch(db);
-          PRODUCTS_DATA.slice(start, start + 500).forEach((product) => {
-            batch.set(doc(db, 'products', String(product.id)), product);
-          });
-          await batch.commit();
-        }
-      } catch (error) {
-        console.warn('Firebase catalog sync unavailable; using local catalog.', error);
+    let seedStarted = false;
+    const unsubscribe = onSnapshot(collection(db, 'products'), async (snapshot) => {
+      setSyncError('');
+      if (!snapshot.empty) {
+        setProducts(snapshot.docs.map((product) => ({ ...product.data(), stock: product.data().stock ?? 10 })));
+        return;
       }
-    };
-    syncCloudCatalog();
+      if (seedStarted) return;
+      seedStarted = true;
+      for (let start = 0; start < PRODUCTS_DATA.length; start += 500) {
+        const batch = writeBatch(db);
+        PRODUCTS_DATA.slice(start, start + 500).forEach((product) => {
+          batch.set(doc(db, 'products', String(product.id)), product);
+        });
+        await batch.commit();
+      }
+    }, (error) => {
+      setSyncError('Cloud catalog unavailable. Showing local catalog.');
+      console.warn('Firebase catalog sync unavailable; using local catalog.', error);
+    });
+    return unsubscribe;
   }, []);
 
   useEffect(() => {
@@ -86,7 +89,7 @@ export const ProductProvider = ({ children }) => {
     return productWithId;
   };
 
-  const updateProduct = (id, changes) => {
+  const updateProduct = async (id, changes) => {
     const updatedProduct = products.find((product) => product.id === id);
     const nextProduct = updatedProduct ? {
       ...updatedProduct,
@@ -99,6 +102,9 @@ export const ProductProvider = ({ children }) => {
       customLensPrice: Number(changes.customLensPrice || 0)
       ,stock: Math.max(0, Number(changes.stock ?? updatedProduct.stock ?? 0))
     } : null;
+    if (firebaseEnabled && db && nextProduct) {
+      await setDoc(doc(db, 'products', String(id)), nextProduct);
+    }
     setProducts(prev => prev.map(product => product.id === id ? {
       ...product,
       ...changes,
@@ -110,12 +116,14 @@ export const ProductProvider = ({ children }) => {
       customLensPrice: Number(changes.customLensPrice || 0)
       ,stock: Math.max(0, Number(changes.stock ?? product.stock ?? 0))
     } : product));
-    if (firebaseEnabled && db && nextProduct) setDoc(doc(db, 'products', String(id)), nextProduct);
+    return nextProduct;
   };
 
-  const deleteProduct = (id) => {
+  const deleteProduct = async (id) => {
+    if (firebaseEnabled && db) {
+      await deleteDoc(doc(db, 'products', String(id)));
+    }
     setProducts(prev => prev.filter(p => p.id !== id));
-    if (firebaseEnabled && db) deleteDoc(doc(db, 'products', String(id)));
   };
 
   const decreaseStock = (items) => {
@@ -136,7 +144,7 @@ export const ProductProvider = ({ children }) => {
   };
 
   return (
-    <ProductContext.Provider value={{ products, addProduct, updateProduct, deleteProduct, decreaseStock }}>
+    <ProductContext.Provider value={{ products, isLoaded, syncError, addProduct, updateProduct, deleteProduct, decreaseStock }}>
       {children}
     </ProductContext.Provider>
   );

@@ -8,7 +8,7 @@ export const ShopByNeed = ({ onSelectNeed }) => {
       subtitle: 'Everyday Ease',
       color: '#5c242a',
       bgColor: '#d49b9c',
-      img: '/images/user_model.png'
+      img: '/images/image.png'
     },
     {
       title: 'WORK',
@@ -60,7 +60,7 @@ export const ShopByNeed = ({ onSelectNeed }) => {
       {/* Mint Green Banner: New Design Frame */}
       <div className="new-design-banner">
         <div className="banner-left-model">
-          <img src="/images/user_model.png" alt="Model Left" />
+          <img src="/images/image.png" alt="Model Left" />
         </div>
 
         <div className="banner-center-content">

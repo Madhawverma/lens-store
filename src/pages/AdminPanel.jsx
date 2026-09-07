@@ -17,6 +17,7 @@ export default function AdminPanel() {
   const [visibleProductCount, setVisibleProductCount] = useState(10);
   const [language, setLanguage] = useState(() => localStorage.getItem('admin_language') || 'en');
   const [repairForm, setRepairForm] = useState({ name: '', phone: '', issue: '', amount: '' });
+  const [actionError, setActionError] = useState('');
   const navigate = useNavigate();
   const isHindi = language === 'hi';
   const text = isHindi ? {
@@ -64,7 +65,6 @@ export default function AdminPanel() {
   };
   const handleLogout = async () => {
     await signOutUser();
-    localStorage.removeItem('verma_admin_session');
     navigate('/');
   };
   const categoryGroups = [
@@ -106,7 +106,7 @@ export default function AdminPanel() {
   );
 
   const REPAIR_STATUSES = ['received', 'diagnosing', 'repairing', 'ready', 'delivered', 'cancelled'];
-  const ORDER_STATUSES = ['placed', 'confirmed', 'packed', 'shipped', 'delivered', 'cancelled'];
+  const ORDER_STATUSES = ['placed', 'confirmed', 'packed', 'shipped', 'delivered', 'return-requested', 'returned', 'cancelled'];
 
   return (
     <div className="admin-layout">
@@ -223,7 +223,8 @@ export default function AdminPanel() {
                         title={text.delete}
                         onClick={() => {
                           if (window.confirm(text.confirmDelete)) {
-                            deleteProduct(product.id);
+                            setActionError('');
+                            deleteProduct(product.id).catch(() => setActionError('Product could not be deleted. Check Firebase admin permissions.'));
                           }
                         }}
                       >
@@ -236,6 +237,7 @@ export default function AdminPanel() {
             </tbody>
           </table>
         </div>
+        {actionError && <p className="admin-action-error">{actionError}</p>}
         {visibleProductCount < filteredProducts.length && (
           <button className="admin-view-more" onClick={() => setVisibleProductCount((count) => Math.min(count + 10, filteredProducts.length))}>
             View More ({Math.min(10, filteredProducts.length - visibleProductCount)} more)
