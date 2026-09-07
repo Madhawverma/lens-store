@@ -28,8 +28,6 @@
   font-weight: 800;
 }
 
-.devotional-bar:hover .devotional-track { animation-play-state: paused; }
-
 .top-bar {
   position: sticky;
   top: 28px;
