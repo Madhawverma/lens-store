@@ -15,7 +15,7 @@
 .devotional-track {
   display: flex;
   width: max-content;
-  animation: devotionalScroll 18s linear infinite;
+  animation: devotionalScroll 11s linear infinite;
 }
 
 .devotional-track span {

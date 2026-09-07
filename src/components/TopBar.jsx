@@ -2,12 +2,9 @@ import React from 'react';
 import './TopBar.css';
 
 export const TopBar = ({ onShopNowClick, onAdminLogin }) => {
-  const devotionalItems = [
-    'जय माता दी',
-    'श्री गणेशाय नमः',
-    'जय माता दी',
-    'श्री गणेशाय नमः'
-  ];
+  const devotionalItems = Array.from({ length: 14 }, (_, index) => (
+    index % 2 === 0 ? 'जय माता दी' : 'श्री गणेशाय नमः'
+  ));
   const tickerItems = [
     "🚚 Shipping Worldwide",
     "✈️ Express Shipping to 🇨🇦 🇺🇸 🇬🇧 🇦🇺",
