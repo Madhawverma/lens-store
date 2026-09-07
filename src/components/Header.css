@@ -2,7 +2,7 @@
   background-color: #ffffff;
   border-bottom: 1px solid var(--border-color);
   position: sticky;
-  top: 42px;
+  top: 70px;
   z-index: 900;
   box-shadow: 0 4px 12px rgba(0, 0, 69, 0.04);
 }
